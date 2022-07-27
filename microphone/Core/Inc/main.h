@@ -40,6 +40,20 @@ extern "C"
 
     /* Exported types ------------------------------------------------------------*/
     /* USER CODE BEGIN ET */
+    typedef struct
+    {
+        float x;
+        float y;
+        /* data */
+    } vector2;
+
+    typedef struct
+    {
+        float v00;
+        float v01;
+        float v10;
+        float v11;
+    } matrix22;
 
     /* USER CODE END ET */
 
@@ -51,9 +65,13 @@ extern "C"
     /* Exported macro ------------------------------------------------------------*/
     /* USER CODE BEGIN EM */
     extern int riseTimes;
-    extern uint32_t MP_timestamp[4];
+    extern uint32_t mp_timestamp[4];
     void arg_prase(int argc, char **argv);
+    void microphone_init();
     void time_init();
+    matrix22 inv(const matrix22 *matrix);
+    vector2 vector2_dot_matrix22(const vector2 *v, const matrix22 *matrix);
+    matrix22 matrix_plus(const matrix22 *m, float value);
     /* USER CODE END EM */
 
     /* Exported functions prototypes ---------------------------------------------*/

@@ -57,8 +57,14 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define SOUND_SPEED 346.0f
+#define TIME_TICK_RATE 1.19047619E-5f
 int riseTimes = 0;
-uint32_t MP_timestamp[4] = {0};
+uint32_t mp_timestamp[4] = {0};
+float delta_distance[3][2] = {0};
+float chans_distance[1][2] = {0};
+vector2 mp_pos[4];
+vector2 sound_source_pos;
 /* USER CODE END 0 */
 
 /**
@@ -97,6 +103,7 @@ int main(void)
     MX_TIM2_Init();
     /* USER CODE BEGIN 2 */
     time_init();
+    microphone_init();
     printf("Init\n");
     /* USER CODE END 2 */
 
@@ -110,7 +117,6 @@ int main(void)
     }
     /* USER CODE END 3 */
 }
-
 
 /**
  * @brief System Clock Configuration
@@ -128,12 +134,11 @@ void SystemClock_Config(void)
     /** Initializes the RCC Oscillators according to the specified parameters
      * in the RCC_OscInitTypeDef structure.
      */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-    RCC_OscInitStruct.PLL.PLLM = 8;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLM = 4;
     RCC_OscInitStruct.PLL.PLLN = 168;
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
     RCC_OscInitStruct.PLL.PLLQ = 4;
@@ -156,10 +161,88 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void time_init()
+matrix22 inv(const matrix22 *matrix)
+{
+    matrix22 ret;
+    float abs = matrix->v00 * matrix->v11 - matrix->v01 * matrix->v10;
+    if (abs == 0)
+        abs = 1.0f;
+    ret.v00 = matrix->v00 / abs;
+    ret.v00 = matrix->v00 / abs;
+    ret.v00 = matrix->v00 / abs;
+    ret.v00 = matrix->v00 / abs;
+    return ret;
+}
+
+vector2 vector2_dot_matrix22(const vector2 *v, const matrix22 *matrix)
+{
+    vector2 ret;
+    ret.x = v->x * matrix->v00 + v->y * matrix->v01;
+    ret.y = v->x * matrix->v01 + v->y * matrix->v11;
+    return ret;
+}
+
+matrix22 matrix_plus(const matrix22 *m, float value)
+{
+    matrix22 ret;
+    ret.v00 = m->v00 * value;
+    ret.v01 = m->v01 * value;
+    ret.v10 = m->v10 * value;
+    ret.v11 = m->v11 * value;
+    return ret;
+}
+
+inline void time_init()
 {
     HAL_TIM_Base_Start_IT(&htim1);
     HAL_TIM_Base_Start(&htim2);
+}
+inline void microphone_init()
+{
+    mp_pos[0].x = -25;
+    mp_pos[0].y = 0;
+    mp_pos[1].x = 25;
+    mp_pos[1].y = 0;
+    mp_pos[2].x = -25;
+    mp_pos[2].y = -15.5;
+    mp_pos[3].x = 25;
+    mp_pos[3].y = -15.5;
+}
+
+void calculate_delta_distance()
+{
+    delta_distance[0][0] = abs((mp_timestamp[0] - mp_timestamp[1]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[0][1] = abs((mp_timestamp[2] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+
+    delta_distance[1][0] = abs((mp_timestamp[0] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[1][1] = abs((mp_timestamp[1] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+
+    delta_distance[2][0] = abs((mp_timestamp[0] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[2][1] = abs((mp_timestamp[1] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+}
+
+void calculate_chans_distance()
+{
+    chans_distance[0][0] = abs((mp_timestamp[0] - mp_timestamp[1]) * TIME_TICK_RATE * SOUND_SPEED);
+    chans_distance[0][1] = abs((mp_timestamp[0] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+}
+void calculate_sound_source()
+{
+}
+
+void chans_method()
+{
+    float x10 = mp_pos[1].x - mp_pos[0].x;
+    float y10 = mp_pos[1].y - mp_pos[0].y;
+    float x20 = mp_pos[2].x - mp_pos[0].x;
+    float y20 = mp_pos[2].y - mp_pos[0].y;
+    matrix22 P1;
+    P1.v00 = x10;
+    P1.v01 = y10;
+    P1.v10 = x20;
+    P1.v11 = y20;
+    P1 = inv(&P1);
+    P1 = matrix_plus(&P1, -1.0f);
 }
 void arg_prase(int argc, char **argv)
 {
