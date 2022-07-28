@@ -1,5 +1,6 @@
 --cpu=Cortex-M4.fp.sp
 "microphone\startup_stm32f407xx.o"
+"microphone\dtoa.o"
 "microphone\main.o"
 "microphone\gpio.o"
 "microphone\dma.o"

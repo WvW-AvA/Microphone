@@ -35,3 +35,4 @@ microphone\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 microphone\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 microphone\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 microphone\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\string.h
+microphone\gpio.o: ../Core/Inc/dtoa.h

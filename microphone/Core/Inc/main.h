@@ -24,8 +24,7 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -36,46 +35,39 @@ extern "C"
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-    /* USER CODE END Includes */
+#include "dtoa.h"
+/* USER CODE END Includes */
 
-    /* Exported types ------------------------------------------------------------*/
-    /* USER CODE BEGIN ET */
-    typedef struct
-    {
-        float x;
-        float y;
-        /* data */
-    } vector2;
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
-    typedef struct
-    {
-        float v00;
-        float v01;
-        float v10;
-        float v11;
-    } matrix22;
+/* USER CODE END ET */
 
-    /* USER CODE END ET */
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
 
-    /* Exported constants --------------------------------------------------------*/
-    /* USER CODE BEGIN EC */
+/* USER CODE END EC */
 
-    /* USER CODE END EC */
-
-    /* Exported macro ------------------------------------------------------------*/
-    /* USER CODE BEGIN EM */
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
     extern int riseTimes;
-    extern uint32_t mp_timestamp[4];
+    extern int mp_timestamp[4];
+    extern float delta_distance[3][2];
+    extern float chans_distance[1][2];
+    extern vector2 mp_pos[4];
+    extern vector2 sound_source_pos;
+
     void arg_prase(int argc, char **argv);
     void microphone_init();
     void time_init();
-    matrix22 inv(const matrix22 *matrix);
-    vector2 vector2_dot_matrix22(const vector2 *v, const matrix22 *matrix);
-    matrix22 matrix_plus(const matrix22 *m, float value);
-    /* USER CODE END EM */
+    void calculate_delta_distance();
+    void calculate_chans_distance();
+    void calculate_sound_source();
 
-    /* Exported functions prototypes ---------------------------------------------*/
-    void Error_Handler(void);
+/* USER CODE END EM */
+
+/* Exported functions prototypes ---------------------------------------------*/
+void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -94,9 +86,9 @@ extern "C"
 #define MP4_Pin GPIO_PIN_3
 #define MP4_GPIO_Port GPIOD
 #define MP4_EXTI_IRQn EXTI3_IRQn
-    /* USER CODE BEGIN Private defines */
+/* USER CODE BEGIN Private defines */
 
-    /* USER CODE END Private defines */
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

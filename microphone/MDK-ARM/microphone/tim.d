@@ -35,3 +35,4 @@ microphone\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 microphone\tim.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 microphone\tim.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 microphone\tim.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\string.h
+microphone\tim.o: ../Core/Inc/dtoa.h

@@ -34,3 +34,4 @@ microphone\stm32f4xx_hal_msp.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ha
 microphone\stm32f4xx_hal_msp.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 microphone\stm32f4xx_hal_msp.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 microphone\stm32f4xx_hal_msp.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\string.h
+microphone\stm32f4xx_hal_msp.o: ../Core/Inc/dtoa.h
