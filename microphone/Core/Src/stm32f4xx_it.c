@@ -65,6 +65,11 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 /* USER CODE BEGIN EV */
+uint8_t mic_bit[4];
+Queue mic_que[4];
+uint8_t mic_cur[4];
+uint8_t mic_lst[4];
+int mic_tick[4];
 uint8_t is_timing = 0;
 inline void time_begin()
 {
@@ -215,71 +220,6 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles EXTI line0 interrupt.
-  */
-void EXTI0_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI0_IRQn 0 */
-    printf("0");
-    mp_timestamp[0] = __HAL_TIM_GET_COUNTER(&htim10);
-    time_begin();
-    HAL_NVIC_DisableIRQ(EXTI0_IRQn);
-  /* USER CODE END EXTI0_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
-  /* USER CODE BEGIN EXTI0_IRQn 1 */
-
-  /* USER CODE END EXTI0_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line1 interrupt.
-  */
-void EXTI1_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI1_IRQn 0 */
-    printf("1");
-    mp_timestamp[1] = __HAL_TIM_GET_COUNTER(&htim10);
-    time_begin();
-    HAL_NVIC_DisableIRQ(EXTI1_IRQn);
-  /* USER CODE END EXTI1_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
-  /* USER CODE BEGIN EXTI1_IRQn 1 */
-  /* USER CODE END EXTI1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line2 interrupt.
-  */
-void EXTI2_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI2_IRQn 0 */
-    printf("2");
-    mp_timestamp[2] = __HAL_TIM_GET_COUNTER(&htim10);
-    time_begin();
-    HAL_NVIC_DisableIRQ(EXTI2_IRQn);
-  /* USER CODE END EXTI2_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
-  /* USER CODE BEGIN EXTI2_IRQn 1 */
-  /* USER CODE END EXTI2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles EXTI line3 interrupt.
-  */
-void EXTI3_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI3_IRQn 0 */
-    printf("3");
-    mp_timestamp[3] = __HAL_TIM_GET_COUNTER(&htim10);
-    time_begin();
-    HAL_NVIC_DisableIRQ(EXTI3_IRQn);
-  /* USER CODE END EXTI3_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
-  /* USER CODE BEGIN EXTI3_IRQn 1 */
-  /* USER CODE END EXTI3_IRQn 1 */
-}
-
-/**
   * @brief This function handles DMA1 stream1 global interrupt.
   */
 void DMA1_Stream1_IRQHandler(void)
@@ -387,38 +327,89 @@ void print_delta_distance(int p1, int p2, int p3, int p4, float d1, float d2)
     printf("MP:%d,%d    delta distance:%f\n", p1, p2, d1);
     printf("MP:%d,%d    delta distance:%f\n", p3, p4, d2);
 }
+
+void window_process()
+{
+    // window cut
+    for (uint8_t i = 0; i < 4; i++) {
+        Queue *q = &mic_que[i];
+        uint8_t d = MAX(0, size(q) - WINDOW_SIZE);
+        while (d--)
+            pop(q);
+    }
+
+    // get filtered data (1 if 1 in window else 0)
+    for (uint8_t i = 0; i < 4; i++) {
+        Queue *q = &mic_que[i];
+        uint8_t x = 1;
+        for (uint8_t j = q->back; j != q->front; j = (j + 1) % QUEUE_SIZE)
+            x &= q->data[j];
+        mic_cur[i] = x;
+    }
+}
+
+void update_timestamp()
+{
+    // update tick
+    for (uint8_t i = 0; i < 4; i++)
+        if (mic_lst[i] == 1 && mic_cur == 0) {
+            mic_tick[i] = TIM10->CNT;
+        }
+
+    // log
+    printf("log tick %d\n", log_tick);
+    for (int i = 0; i < 4; i++)
+        printf("mic_tick[%d] = %d\n", i, mic_tick[i]);
+    printf("\n");
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if (TIM1 == htim->Instance && is_timing)
-    {
-        printf("\n");
-        is_timing = 0;
-        HAL_NVIC_EnableIRQ(EXTI0_IRQn);
-        HAL_NVIC_EnableIRQ(EXTI1_IRQn);
-        HAL_NVIC_EnableIRQ(EXTI2_IRQn);
-        HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-        for (int i = 0; i < 4; i++)
-        {
-            if (mp_timestamp[i] == -1)
-                return;
-        }
-        calculate_delta_distance();
-        // print_delta_distance(0, 1, 2, 3, delta_distance[0][0], delta_distance[0][1]);
-        // print_delta_distance(0, 2, 1, 3, delta_distance[1][0], delta_distance[1][1]);
-        // print_delta_distance(0, 3, 1, 2, delta_distance[2][0], delta_distance[2][1]);
-        for (int i = 0; i < 4; i++)
-        {
-            printf("mp:%d,timestamp:%u\n", i, mp_timestamp[i]);
-            mp_timestamp[i] = -1;
-        }
+    if (htim->Instance == TIM10) {
+        mic_bit[0] = HAL_GPIO_ReadPin(MIC0_GPIO_Port, MIC0_Pin);
+        mic_bit[1] = HAL_GPIO_ReadPin(MIC1_GPIO_Port, MIC1_Pin);
+        mic_bit[2] = HAL_GPIO_ReadPin(MIC2_GPIO_Port, MIC2_Pin);
+        mic_bit[3] = HAL_GPIO_ReadPin(MIC3_GPIO_Port, MIC3_Pin);
+
+        for (uint8_t i = 0; i < 4; i++)
+            push(&mic_que[i], mic_bit[i]);
+
+        memcpy(mic_lst, mic_cur, sizeof(mic_cur));
+
+        window_process();
+
+        update_timestamp();
     }
-    else if (TIM10 == htim->Instance && is_timing)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            mp_timestamp[i] = -1;
-        }
-    }
+  //if (TIM1 == htim->Instance && is_timing)
+  //{
+  //    printf("\n");
+  //    is_timing = 0;
+  //    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+  //    HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+  //    HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+  //    HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+  //    for (int i = 0; i < 4; i++)
+  //    {
+  //        if (mp_timestamp[i] == -1)
+  //            return;
+  //    }
+  //    calculate_delta_distance();
+  //    // print_delta_distance(0, 1, 2, 3, delta_distance[0][0], delta_distance[0][1]);
+  //    // print_delta_distance(0, 2, 1, 3, delta_distance[1][0], delta_distance[1][1]);
+  //    // print_delta_distance(0, 3, 1, 2, delta_distance[2][0], delta_distance[2][1]);
+  //    for (int i = 0; i < 4; i++)
+  //    {
+  //        printf("mp:%d,timestamp:%u\n", i, mp_timestamp[i]);
+  //        mp_timestamp[i] = -1;
+  //    }
+  //}
+  //else if (TIM10 == htim->Instance && is_timing)
+  //{
+  //    for (int i = 0; i < 4; i++)
+  //    {
+  //        mp_timestamp[i] = -1;
+  //    }
+  //}
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
