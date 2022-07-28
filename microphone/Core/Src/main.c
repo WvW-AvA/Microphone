@@ -169,6 +169,10 @@ inline void time_init()
 {
     HAL_TIM_Base_Start_IT(&htim1);
     HAL_TIM_Base_Start(&htim10);
+    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+    HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+    HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+    HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 }
 inline void microphone_init()
 {
