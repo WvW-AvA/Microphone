@@ -1,4 +1,5 @@
 #include "dtoa.h"
+#include "stdio.h"
 #include "math.h"
 vector2 zero_point = {0};
 
@@ -48,7 +49,6 @@ inline vector2 vector2_plus(vector2 v, float value)
     ret.y = v.y * value;
     return ret;
 }
-
 inline matrix22 matrix_transform(matrix22 m)
 {
     matrix22 ret;
@@ -178,4 +178,8 @@ vector2 chans_meth(vector2 mp0, vector2 mp1, vector2 mp2, float d1, float d2)
     vector2 ret;
     genfunc(mp0.x, mp0.y, mp1.x, mp1.y, mp2.x, mp2.y, d1, d2, &(ret.x), &(ret.y));
     return ret;
+}
+inline void print_vector(vector2 v)
+{
+    printf("v.x=%f,v.y=%f\n", v.x, v.y);
 }

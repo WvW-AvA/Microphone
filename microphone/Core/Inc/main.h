@@ -24,7 +24,8 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -36,26 +37,27 @@ extern "C" {
 #include "stdlib.h"
 #include "string.h"
 #include "dtoa.h"
-/* USER CODE END Includes */
+    /* USER CODE END Includes */
 
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
-    #define QUEUE_SIZE 20
-    #define WINDOW_SIZE 5
+    /* Exported types ------------------------------------------------------------*/
+    /* USER CODE BEGIN ET */
+#define QUEUE_SIZE 20
+#define WINDOW_SIZE 5
 
-    typedef struct _queue {
+    typedef struct _queue
+    {
         uint8_t data[QUEUE_SIZE];
         uint8_t front, back;
     } Queue;
-/* USER CODE END ET */
+    /* USER CODE END ET */
 
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
+    /* Exported constants --------------------------------------------------------*/
+    /* USER CODE BEGIN EC */
 
-/* USER CODE END EC */
+    /* USER CODE END EC */
 
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
+    /* Exported macro ------------------------------------------------------------*/
+    /* USER CODE BEGIN EM */
     extern int riseTimes;
     extern int mp_timestamp[4];
     extern float delta_distance[3][2];
@@ -68,14 +70,14 @@ extern "C" {
     void time_init();
     void calculate_delta_distance();
     void calculate_chans_distance();
-    void calculate_sound_source();
+    vector2 calculate_sound_source();
 
-/* USER CODE END EM */
+    /* USER CODE END EM */
 
-/* Exported functions prototypes ---------------------------------------------*/
-void Error_Handler(void);
+    /* Exported functions prototypes ---------------------------------------------*/
+    void Error_Handler(void);
 
-/* USER CODE BEGIN EFP */
+    /* USER CODE BEGIN EFP */
     void push(Queue *q, uint8_t x);
     uint8_t pop(Queue *q);
     uint8_t size(Queue *q);
@@ -92,7 +94,7 @@ void Error_Handler(void);
 #define MIC3_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
-/* USER CODE END Private defines */
+    /* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

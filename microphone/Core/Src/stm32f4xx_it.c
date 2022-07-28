@@ -315,11 +315,6 @@ void DMA2_Stream2_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void print_delta_distance(int p1, int p2, int p3, int p4, float d1, float d2)
-{
-    printf("MP:%d,%d    delta distance:%f\n", p1, p2, d1);
-    printf("MP:%d,%d    delta distance:%f\n", p3, p4, d2);
-}
 
 void window_process()
 {
@@ -354,7 +349,6 @@ void update_timestamp()
         if (mic_lst[i] == 1 && mic_cur[i] == 0)
         {
             mp_timestamp[i] = TIM10->CNT;
-            printf("%d", i);
             mic_order[order] = i;
             order++;
             if (order >= 4)
@@ -369,9 +363,13 @@ void update_timestamp()
 void print_tick()
 {
     // log
-    printf("log tick %d\n", log_tick++);
+    printf("mp_order:");
     for (int i = 0; i < 4; i++)
-        printf("mc_timestamp[%d] = %d\n", i, mp_timestamp[i]);
+        printf("%d", mic_order[i]);
+    printf("\nlog tick %d\n", log_tick++);
+    for (int i = 0; i < 4; i++)
+        printf("mp_timestamp[%d] = %d\n", i, mp_timestamp[i]);
+
     printf("\n");
 }
 

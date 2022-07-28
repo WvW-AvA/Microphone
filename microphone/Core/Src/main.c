@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "math.h"
+#include "dtoa.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,7 +63,7 @@ void SystemClock_Config(void);
 #define TIME_TICK_RATE 5.59238092E-6f
 int mp_timestamp[4] = {0};
 float delta_distance[3][2] = {0};
-float chans_distance[1][2] = {0};
+float chans_distance[3][2] = {0};
 vector2 mp_pos[4];
 vector2 sound_source_pos;
 
@@ -132,6 +133,7 @@ int main(void)
     time_init();
     microphone_init();
     printf("Init\n");
+    vector2 sound_source;
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -146,6 +148,9 @@ int main(void)
                 sample_flag = 0;
                 printf("begin calculate\n");
                 calculate_chans_distance();
+                sound_source = calculate_sound_source();
+                printf("ss pos:");
+                print_vector(sound_source);
             }
         }
         /* USER CODE END WHILE */
@@ -219,25 +224,58 @@ inline void microphone_init()
     mp_pos[3].y = -15.5;
 }
 
+inline float get_det_d(float ts1, float ts2)
+{
+    return ((int)(ts1 - ts2) * TIME_TICK_RATE * SOUND_SPEED);
+}
+
 void calculate_delta_distance()
 {
-    delta_distance[0][0] = ((int)(mp_timestamp[0] - mp_timestamp[1]) * TIME_TICK_RATE * SOUND_SPEED);
-    delta_distance[0][1] = ((int)(mp_timestamp[2] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[0][0] = get_det_d(mp_timestamp[0], mp_timestamp[1]);
+    delta_distance[0][1] = get_det_d(mp_timestamp[2], mp_timestamp[3]);
 
-    delta_distance[1][0] = ((int)(mp_timestamp[0] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
-    delta_distance[1][1] = ((int)(mp_timestamp[1] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[1][0] = get_det_d(mp_timestamp[0], mp_timestamp[2]);
+    delta_distance[1][1] = get_det_d(mp_timestamp[1], mp_timestamp[3]);
 
-    delta_distance[2][0] = ((int)(mp_timestamp[0] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
-    delta_distance[2][1] = ((int)(mp_timestamp[1] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[2][0] = get_det_d(mp_timestamp[0], mp_timestamp[3]);
+    delta_distance[2][1] = get_det_d(mp_timestamp[1], mp_timestamp[2]);
 }
 
 void calculate_chans_distance()
 {
-    chans_distance[0][0] = abs((mp_timestamp[0] - mp_timestamp[1]) * TIME_TICK_RATE * SOUND_SPEED);
-    chans_distance[0][1] = abs((mp_timestamp[0] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+
+    chans_distance[0][0] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[1]]);
+    chans_distance[0][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[2]]);
+
+    chans_distance[1][0] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[1]]);
+    chans_distance[1][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[3]]);
+
+    chans_distance[2][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[2]]);
+    chans_distance[2][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[3]]);
+
+    for (int i = 0; i < 3; i++)
+    {
+        printf("cd%d:%f %f ", i, chans_distance[i][0], chans_distance[i][1]);
+    }
+    printf("\n");
 }
-void calculate_sound_source()
+#define CHANS_METHOD
+vector2 calculate_sound_source()
 {
+    vector2 res = {0};
+#ifdef CHANS_METHOD
+    vector2 sp[3];
+    sp[0] = chans_meth(mp_pos[mic_order[0]], mp_pos[mic_order[1]], mp_pos[mic_order[2]], chans_distance[0][0], chans_distance[0][1]);
+    sp[1] = chans_meth(mp_pos[mic_order[0]], mp_pos[mic_order[1]], mp_pos[mic_order[3]], chans_distance[1][0], chans_distance[1][1]);
+    sp[2] = chans_meth(mp_pos[mic_order[0]], mp_pos[mic_order[2]], mp_pos[mic_order[3]], chans_distance[2][0], chans_distance[2][1]);
+    for (int i = 0; i < 3; i++)
+    {
+        res = vector2_add_vector2(res, sp[i]);
+        print_vector(sp[i]);
+    }
+    res = vector2_plus(res, (1.0f / 3.0f));
+#endif
+    return res;
 }
 
 void arg_prase(int argc, char **argv)
