@@ -121,9 +121,9 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM10_Init();
   /* USER CODE BEGIN 2 */
-    time_init();
-    microphone_init();
-    printf("Init\n");
+    //time_init();
+    //microphone_init();
+    //printf("Init\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -131,7 +131,7 @@ int main(void)
     while (1)
     {
     /* USER CODE END WHILE */
-
+        printf("I'm alive\n");
     /* USER CODE BEGIN 3 */
     }
   /* USER CODE END 3 */
