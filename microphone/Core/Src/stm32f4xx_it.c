@@ -71,6 +71,7 @@ uint8_t mic_cur[4];
 uint8_t mic_lst[4];
 int mic_tick[4];
 uint8_t is_timing = 0;
+unsigned int log_tick = 0;
 inline void time_begin()
 {
     if (is_timing == 0)
@@ -352,12 +353,12 @@ void update_timestamp()
 {
     // update tick
     for (uint8_t i = 0; i < 4; i++)
-        if (mic_lst[i] == 1 && mic_cur == 0) {
+        if (mic_lst[i] == 1 && mic_cur[i] == 0) {
             mic_tick[i] = TIM10->CNT;
         }
 
     // log
-    printf("log tick %d\n", log_tick);
+    printf("log tick %d\n", log_tick++);
     for (int i = 0; i < 4; i++)
         printf("mic_tick[%d] = %d\n", i, mic_tick[i]);
     printf("\n");
