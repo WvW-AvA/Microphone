@@ -36,6 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -59,14 +60,37 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 #define SOUND_SPEED 346.0f
 #define TIME_TICK_RATE 5.59238092E-6f
-int riseTimes = 0;
 int mp_timestamp[4] = {0};
 float delta_distance[3][2] = {0};
 float chans_distance[1][2] = {0};
 vector2 mp_pos[4];
 vector2 sound_source_pos;
-uint8_t mp_index[4] = {0};
-uint8_t mp_counter = 0;
+
+uint8_t sample_flag = 0;
+extern uint8_t mic_cur[4];
+
+extern uint8_t order;
+extern uint8_t mic_order[4];
+
+void push(Queue *q, uint8_t x)
+{
+    q->data[q->front++] = x;
+    q->front %= QUEUE_SIZE;
+}
+
+uint8_t pop(Queue *q)
+{
+    if (q->back == q->front)
+        return -1;
+    uint8_t ret = q->data[q->back++];
+    q->back %= QUEUE_SIZE;
+    return ret;
+}
+
+uint8_t size(Queue *q)
+{
+    return (q->front - q->back + QUEUE_SIZE) % QUEUE_SIZE;
+}
 /* USER CODE END 0 */
 
 /**
@@ -114,8 +138,17 @@ int main(void)
     /* USER CODE BEGIN WHILE */
     while (1)
     {
+        if ((mic_cur[0] * mic_cur[1] * mic_cur[2] * mic_cur[3]))
+        {
+            order = 0;
+            if (sample_flag)
+            {
+                sample_flag = 0;
+                printf("begin calculate\n");
+                calculate_chans_distance();
+            }
+        }
         /* USER CODE END WHILE */
-
         /* USER CODE BEGIN 3 */
     }
     /* USER CODE END 3 */
@@ -188,14 +221,14 @@ inline void microphone_init()
 
 void calculate_delta_distance()
 {
-    delta_distance[0][0] = ((mp_timestamp[0] - mp_timestamp[1]) * TIME_TICK_RATE * SOUND_SPEED);
-    delta_distance[0][1] = ((mp_timestamp[2] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[0][0] = ((int)(mp_timestamp[0] - mp_timestamp[1]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[0][1] = ((int)(mp_timestamp[2] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
 
-    delta_distance[1][0] = ((mp_timestamp[0] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
-    delta_distance[1][1] = ((mp_timestamp[1] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[1][0] = ((int)(mp_timestamp[0] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[1][1] = ((int)(mp_timestamp[1] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
 
-    delta_distance[2][0] = ((mp_timestamp[0] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
-    delta_distance[2][1] = ((mp_timestamp[1] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[2][0] = ((int)(mp_timestamp[0] - mp_timestamp[3]) * TIME_TICK_RATE * SOUND_SPEED);
+    delta_distance[2][1] = ((int)(mp_timestamp[1] - mp_timestamp[2]) * TIME_TICK_RATE * SOUND_SPEED);
 }
 
 void calculate_chans_distance()
