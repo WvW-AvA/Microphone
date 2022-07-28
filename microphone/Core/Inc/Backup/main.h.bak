@@ -40,7 +40,10 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+    typedef struct _queue {
+        uint8 data[QUEUE_SIZE];
+        uint8 front, back;
+    } Queue;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -70,24 +73,37 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+    void push(Queue *q, uint8_t x)
+    {
+        q->data[q->front++] = x;
+    }
 
+    uint8_t pop(Queue *q)
+    {
+        if (q->back == q->front) return -1;
+        uint8_t ret = q->data[q->back++];
+        return ret;
+    }
+
+    uint8_t size(Queue *q)
+    {
+        return (q->front - q->back + QUEUE_SIZE) % QUEUE_SIZE;
+    }
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define MP1_Pin GPIO_PIN_0
-#define MP1_GPIO_Port GPIOD
-#define MP1_EXTI_IRQn EXTI0_IRQn
-#define MP2_Pin GPIO_PIN_1
-#define MP2_GPIO_Port GPIOD
-#define MP2_EXTI_IRQn EXTI1_IRQn
-#define MP3_Pin GPIO_PIN_2
-#define MP3_GPIO_Port GPIOD
-#define MP3_EXTI_IRQn EXTI2_IRQn
-#define MP4_Pin GPIO_PIN_3
-#define MP4_GPIO_Port GPIOD
-#define MP4_EXTI_IRQn EXTI3_IRQn
+#define MIC0_Pin GPIO_PIN_0
+#define MIC0_GPIO_Port GPIOD
+#define MIC1_Pin GPIO_PIN_1
+#define MIC1_GPIO_Port GPIOD
+#define MIC2_Pin GPIO_PIN_2
+#define MIC2_GPIO_Port GPIOD
+#define MIC3_Pin GPIO_PIN_3
+#define MIC3_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
-
+#define QUEUE_SIZE 20
+#define WINDOW_SIZE 5
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

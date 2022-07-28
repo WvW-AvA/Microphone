@@ -36,6 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,6 +67,22 @@ float chans_distance[1][2] = {0};
 vector2 mp_pos[4];
 vector2 sound_source_pos;
 
+void push(Queue *q, uint8_t x)
+{
+    q->data[q->front++] = x;
+}
+
+uint8_t pop(Queue *q)
+{
+    if (q->back == q->front) return -1;
+    uint8_t ret = q->data[q->back++];
+    return ret;
+}
+
+uint8_t size(Queue *q)
+{
+    return (q->front - q->back + QUEUE_SIZE) % QUEUE_SIZE;
+}
 /* USER CODE END 0 */
 
 /**

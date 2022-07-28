@@ -40,9 +40,12 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+    #define QUEUE_SIZE 20
+    #define WINDOW_SIZE 5
+
     typedef struct _queue {
-        uint8 data[QUEUE_SIZE];
-        uint8 front, back;
+        uint8_t data[QUEUE_SIZE];
+        uint8_t front, back;
     } Queue;
 /* USER CODE END ET */
 
@@ -73,22 +76,9 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-    void push(Queue *q, uint8_t x)
-    {
-        q->data[q->front++] = x;
-    }
-
-    uint8_t pop(Queue *q)
-    {
-        if (q->back == q->front) return -1;
-        uint8_t ret = q->data[q->back++];
-        return ret;
-    }
-
-    uint8_t size(Queue *q)
-    {
-        return (q->front - q->back + QUEUE_SIZE) % QUEUE_SIZE;
-    }
+    void push(Queue *q, uint8_t x);
+    uint8_t pop(Queue *q);
+    uint8_t size(Queue *q);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -101,8 +91,6 @@ void Error_Handler(void);
 #define MIC3_Pin GPIO_PIN_3
 #define MIC3_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
-#define QUEUE_SIZE 20
-#define WINDOW_SIZE 5
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 /* USER CODE END Private defines */
 
