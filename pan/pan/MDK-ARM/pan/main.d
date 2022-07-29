@@ -31,6 +31,11 @@ pan\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 pan\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 pan\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 pan\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+pan\main.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdio.h
+pan\main.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+pan\main.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\string.h
+pan\main.o: ../Core/Inc/dma.h
 pan\main.o: ../Core/Inc/tim.h
 pan\main.o: ../Core/Inc/usart.h
 pan\main.o: ../Core/Inc/gpio.h
+pan\main.o: ../Core/Inc/pan.h
