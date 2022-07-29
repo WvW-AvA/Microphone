@@ -38,3 +38,4 @@ voice_search1\usart.o: ../Core/Inc/gpio.h
 voice_search1\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 voice_search1\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 voice_search1\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+voice_search1\usart.o: ..\MDK-ARM\pan.h

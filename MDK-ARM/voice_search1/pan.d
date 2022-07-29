@@ -37,4 +37,4 @@ voice_search1\pan.o: ../Core/Inc/gpio.h
 voice_search1\pan.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 voice_search1\pan.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 voice_search1\pan.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-voice_search1\pan.o: pan.h
+voice_search1\pan.o: ..\MDK-ARM\pan.h

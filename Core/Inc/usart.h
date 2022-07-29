@@ -35,7 +35,8 @@ extern UART_HandleTypeDef huart1;
 extern USART_HandleTypeDef husart2;
 
 /* USER CODE BEGIN Private defines */
-
+extern int receive_x;
+extern int receive_y;
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);

@@ -36,7 +36,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-	uint8_t error_fix=100;
 	int positionx=0;
 	int positiony=0;
 /* USER CODE END PD */
@@ -60,6 +59,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+extern uint8_t usart1_RxBuffer[4];
+extern int receive_x;
+extern int receive_y;
+
+uint8_t tmp = 0;
 int fputc(int ch, FILE *f){
 uint8_t temp[1] = {ch};
 HAL_UART_Transmit(&huart1, temp, 1, 2);//huart1?要根据你的配置修?
@@ -100,34 +104,30 @@ int main(void)
   MX_USART2_Init();
   /* USER CODE BEGIN 2 */
 	//__HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
-	HAL_UART_Receive_IT(&huart1,usart1_RxBuffer,4);
+  HAL_UART_Receive_IT(&huart1,usart1_RxBuffer,4);
 	//HAL_UART_Receive_IT(&huart1,,1);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);
-	int a=0;
-		printf("ready\r\n");
-
+  send_H_angle(70);
+  send_L_angle(90);
+	printf("ready\r\n");
+	int x=130,y=270;
+	printf("anglea:%f\r\n",trans_anglea(x,y));
+	printf("angleb:%f\r\n",trans_angleb(x,y));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		a++;
-//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500+error_fix);
-////		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 1500);
-//			HAL_Delay(3000);
-//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 1500+error_fix);
-//			HAL_Delay(3000);
-//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2500+error_fix);
-//			HAL_Delay(3000);
-		//printf("%d /r/n",a);
-//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2000);
-//			HAL_Delay(1000);
-//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 1000);
-//			HAL_Delay(1000);
-//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2000);
+//		send_H_angle((int)trans_angleb(receive_x,receive_y));
+//		send_L_angle((int)trans_anglea(receive_x,receive_y)+90);
+  printf("receive_x:%d\r\n",receive_x);
+  printf("receive_y:%d\r\n",receive_y);
+		//a++;
+		//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500+error_fix);
+		//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 1500+error_fix);
+  HAL_Delay(3000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -173,33 +173,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-int is_str_equal(char *str_p1, uint8_t size1, char *str_p2)
-{
-    if (size1 == 0)
-        return 0;
-    for (int i = 0; i < size1; i++)
-    {
-        if (str_p1[i] != str_p2[i])
-            return 0;
-    }
-    return 1;
-}
-
-void arg_prase(int argc, char **argv)
-{
-    // printf("prase\n");
-    for (int i = 0; i < argc; i++)
-    {
-        printf("%s ", argv[i]);
-        if (is_str_equal("positionx", 3, argv[i]))
-        {
-            printf("positionx=%d\n", positionx);
-        }
-				 else if (is_str_equal("positiony", 3, argv[i]))
-        {
-            printf("positionx=%d\n", positiony);
-        }
-    }}
 /* USER CODE END 4 */
 
 /**
