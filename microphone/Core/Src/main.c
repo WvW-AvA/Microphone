@@ -73,7 +73,7 @@ vector2 mp_pos[4];
 vector2 sound_source_pos;
 
 uint8_t sample_flag = 0;
-extern uint8_t mic_cur[4];
+extern uint8_t mic_bit[4];
 
 extern uint8_t order;
 extern uint8_t mic_order[4];
@@ -146,7 +146,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-        if ((!mic_cur[0] * !mic_cur[1] * !mic_cur[2] * !mic_cur[3]))
+        if ((!mic_bit[0] * !mic_bit[1] * !mic_bit[2] * !mic_bit[3]))
         {
             if (sample_flag)
             {
@@ -164,7 +164,7 @@ int main(void)
                 sound_source = calculate_sound_source();
             }
         }
-        if (mic_cur[0] * mic_cur[1] * mic_cur[2] * mic_cur[3])
+        if (mic_bit[0] * mic_bit[1] * mic_bit[2] * mic_bit[3])
             order = 0;
     /* USER CODE END WHILE */
 

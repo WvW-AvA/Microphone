@@ -1,16 +1,5 @@
 (undo-tree-save-format-version . 1)
-"6de3a93d216bc22cc82baf40176d7b9fc19a9bf2"
-[nil nil nil nil (25314 22254 330047 845000) 0 nil]
-([nil nil ((2107 . 2108) (t 25314 20999 170756 101000) 2107) nil (25314 22254 330046 356000) 0 nil])
-([nil nil ((nil rear-nonsticky nil 2108 . 2109) (#("
-" 0 1 (fontified nil ws-butler-chg chg)) . -2380) (undo-tree-id1 . -1) (2108 . 2381)) nil (25314 22254 330044 18000) 0 nil])
-([nil nil ((#("
-" 0 1 (fontified t ws-butler-chg chg rear-nonsticky t)) . 2108) (undo-tree-id0 . -1)) nil (25314 22254 330037 602000) 0 nil])
-([nil nil ((nil rear-nonsticky nil 1326 . 1327) (#("
-" 0 1 (c-in-sws t fontified nil ws-butler-chg chg)) . -1412) (undo-tree-id2 . -1) (1326 . 1413) 1302 (t 25314 22254 334321 108000)) nil (25314 22404 489124 402000) 0 nil])
-([nil nil ((#("#define QUEUE_SIZE 20
-#define WINDOW_SIZE 5
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-" 0 1 (c-is-sws t c-in-sws t fontified t face font-lock-preprocessor-face) 1 7 (c-in-sws t fontified t face font-lock-preprocessor-face) 7 8 (c-in-sws t fontified t) 8 18 (c-in-sws t fontified t face font-lock-variable-name-face) 18 22 (c-in-sws t fontified t) 22 23 (c-in-sws t c-is-sws t fontified t face font-lock-preprocessor-face) 23 29 (c-in-sws t fontified t face font-lock-preprocessor-face) 29 30 (c-in-sws t fontified t) 30 41 (c-in-sws t fontified t face font-lock-variable-name-face) 41 44 (c-in-sws t fontified t) 44 45 (c-in-sws t c-is-sws t fontified t face font-lock-preprocessor-face) 45 51 (c-in-sws t fontified t face font-lock-preprocessor-face) 51 52 (c-in-sws t fontified t) 52 55 (c-in-sws t fontified t face font-lock-function-name-face) 55 56 (c-in-sws t fontified t) 56 57 (c-in-sws t fontified t face font-lock-variable-name-face) 57 59 (c-in-sws t fontified t) 59 60 (c-in-sws t fontified t face font-lock-variable-name-face) 60 85 (c-in-sws t fontified t) 85 86 (fontified t c-in-sws t)) . 1327) (undo-tree-id3 . -85) (undo-tree-id4 . -21) (undo-tree-id5 . -8) (undo-tree-id6 . -18) (undo-tree-id7 . -30) (undo-tree-id8 . -41) (undo-tree-id9 . -52) (undo-tree-id10 . -55) (undo-tree-id11 . -85) (t 25314 22404 492585 18000)) nil (25314 22453 884371 773000) 0 nil])
-([nil current ((1326 . 1327) 1302) nil (25314 22453 884347 69000) 0 nil])
+"c70a45a6fb5670c896c1e6bc4712f3feaed742fe"
+[nil nil nil nil (25315 23367 957504 260000) 0 nil]
+([nil current ((#("mic_cur" 0 7 (fontified nil)) . 4215) (4222 . 4229) (#("mic_cur" 0 7 (fontified nil)) . 4202) (4209 . 4216) (#("mic_cur" 0 7 (fontified nil)) . 4189) (4196 . 4203) (#("mic_cur" 0 7 (fontified t)) . 4176) (4183 . 4190) (#("mic_cur" 0 7 (fontified nil)) . 3652) (3659 . 3666) (#("mic_cur" 0 7 (fontified nil)) . 3638) (3645 . 3652) (#("mic_cur" 0 7 (fontified nil)) . 3624) (3631 . 3638) (#("mic_cur" 0 7 (fontified t)) . 3610) (3617 . 3624) (nil fontified t 2228 . 2235) (t 25315 18942 859362 993000) (nil face font-lock-variable-name-face 2228 . 2235) (t 25315 18942 859362 993000) (#("mic_cur" 0 7 (fontified t face font-lock-variable-name-face)) . 2228) (t 25315 18942 859362 993000) (2235 . 2242) (t 25315 18942 859362 993000)) nil (25315 23367 957496 564000) 0 nil])
 nil
