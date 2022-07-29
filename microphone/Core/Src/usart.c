@@ -360,7 +360,7 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
     char **argv = (char **)malloc(sizeof(char *) * 10);
     int argc = 0;
     int tem_p = 0;
-    int len;
+    int len = 0;
     char *buffer;
     if (huart->Instance == huart2.Instance)
     {

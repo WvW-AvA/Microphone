@@ -70,6 +70,7 @@ void DMA2_Stream2_IRQHandler(void);
 /* USER CODE BEGIN EFP */
     void time_begin();
     void print_tick();
+    void update_timestamp(int);
 
 /* USER CODE END EFP */
 

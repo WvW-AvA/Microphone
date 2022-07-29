@@ -146,7 +146,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-        if ((!mic_bit[0] * !mic_bit[1] * !mic_bit[2] * !mic_bit[3]))
+        if ((!mic_bit[0] && !mic_bit[1] && !mic_bit[2] && !mic_bit[3]))
         {
             if (sample_flag)
             {
@@ -164,8 +164,10 @@ int main(void)
                 sound_source = calculate_sound_source();
             }
         }
+        /*
         if (mic_bit[0] * mic_bit[1] * mic_bit[2] * mic_bit[3])
             order = 0;
+        */
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

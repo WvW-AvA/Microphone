@@ -379,6 +379,7 @@ void DMA2_Stream2_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 
+/*
 void window_process()
 {
     // window cut
@@ -400,6 +401,7 @@ void window_process()
         mic_cur[i] = x;
     }
 }
+*/
 uint8_t order = 0;
 uint8_t mic_order[4];
 
