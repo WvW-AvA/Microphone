@@ -24,8 +24,7 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -37,10 +36,10 @@ extern "C"
 #include "stdlib.h"
 #include "string.h"
 #include "dtoa.h"
-    /* USER CODE END Includes */
+/* USER CODE END Includes */
 
-    /* Exported types ------------------------------------------------------------*/
-    /* USER CODE BEGIN ET */
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 #define QUEUE_SIZE 1000
 #define WINDOW_SIZE 500
 
@@ -49,15 +48,15 @@ extern "C"
         uint8_t data[QUEUE_SIZE];
         uint8_t front, back;
     } Queue;
-    /* USER CODE END ET */
+/* USER CODE END ET */
 
-    /* Exported constants --------------------------------------------------------*/
-    /* USER CODE BEGIN EC */
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
 
-    /* USER CODE END EC */
+/* USER CODE END EC */
 
-    /* Exported macro ------------------------------------------------------------*/
-    /* USER CODE BEGIN EM */
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
     extern int riseTimes;
     extern int mp_timestamp[4];
     extern float delta_distance[3][2];
@@ -73,29 +72,41 @@ extern "C"
     vector2 calculate_sound_source();
     float get_det_d(int ts1, int ts2);
 
-    /* USER CODE END EM */
+/* USER CODE END EM */
 
-    /* Exported functions prototypes ---------------------------------------------*/
-    void Error_Handler(void);
+/* Exported functions prototypes ---------------------------------------------*/
+void Error_Handler(void);
 
-    /* USER CODE BEGIN EFP */
+/* USER CODE BEGIN EFP */
     void push(Queue *q, uint8_t x);
     uint8_t pop(Queue *q);
     uint8_t size(Queue *q);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define MIC0_Pin GPIO_PIN_0
-#define MIC0_GPIO_Port GPIOD
-#define MIC1_Pin GPIO_PIN_1
-#define MIC1_GPIO_Port GPIOD
-#define MIC2_Pin GPIO_PIN_2
-#define MIC2_GPIO_Port GPIOD
-#define MIC3_Pin GPIO_PIN_3
-#define MIC3_GPIO_Port GPIOD
+#define MIC_EX0_Pin GPIO_PIN_0
+#define MIC_EX0_GPIO_Port GPIOD
+#define MIC_EX0_EXTI_IRQn EXTI0_IRQn
+#define MIC_EX1_Pin GPIO_PIN_1
+#define MIC_EX1_GPIO_Port GPIOD
+#define MIC_EX1_EXTI_IRQn EXTI1_IRQn
+#define MIC_EX2_Pin GPIO_PIN_2
+#define MIC_EX2_GPIO_Port GPIOD
+#define MIC_EX2_EXTI_IRQn EXTI2_IRQn
+#define MIC_EX3_Pin GPIO_PIN_3
+#define MIC_EX3_GPIO_Port GPIOD
+#define MIC_EX3_EXTI_IRQn EXTI3_IRQn
+#define MIC_IN0_Pin GPIO_PIN_4
+#define MIC_IN0_GPIO_Port GPIOD
+#define MIC_IN1_Pin GPIO_PIN_5
+#define MIC_IN1_GPIO_Port GPIOD
+#define MIC_IN2_Pin GPIO_PIN_6
+#define MIC_IN2_GPIO_Port GPIOD
+#define MIC_IN3_Pin GPIO_PIN_7
+#define MIC_IN3_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
-    /* USER CODE END Private defines */
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }
