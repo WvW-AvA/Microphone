@@ -65,12 +65,12 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 /* USER CODE BEGIN EV */
-//uint8_t mic_bit[4];
-//Queue mic_que[4];
-//uint8_t mic_cur[4];
-//uint8_t mic_lst[4];
-//int mic_tick[4];
-#define TSTH 500
+// uint8_t mic_bit[4];
+// Queue mic_que[4];
+// uint8_t mic_cur[4];
+// uint8_t mic_lst[4];
+// int mic_tick[4];
+#define TSTH 6000
 
 uint8_t mic_bit[4] = {1};
 int mic_ts_cur[4];
@@ -410,55 +410,44 @@ void update_timestamp(int i)
 {
     mic_bit[i] = 0;
     mic_ts_lst[i] = mic_ts_cur[i];
-    last_ts = (mic_ts_cur[i] = TIM10->CNT);
-    if (mic_ts_cur[i] - mic_ts_lst[i] > TSTH) {
+    last_ts = (mic_ts_cur[i] = TIM2->CNT);
+    if (mic_ts_cur[i] - mic_ts_lst[i] > TSTH)
+    {
         mp_timestamp[i] = mic_ts_cur[i]; // mic_ts[i]
         mic_order[order] = i;
         order++;
-        if (order >= 4) {
+        if (order >= 4)
+        {
             sample_flag = 1;
             order = 0;
         }
     }
 }
-
-void print_tick()
-{
-    // log
-    printf("mp_order:");
-    for (int i = 0; i < 4; i++)
-        printf("%d", mic_order[i]);
-    printf("\nlog tick %d\n", log_tick++);
-    for (int i = 0; i < 4; i++)
-        printf("mp_timestamp[%d] = %d\n", i, mp_timestamp[i]);
-
-    printf("\n");
-}
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 
     if (htim->Instance == TIM1)
     {
-        int timestamp = TIM10->CNT;
-        for (uint8_t i = 0; i < 4; i++) {
+        int timestamp = TIM2->CNT;
+        for (uint8_t i = 0; i < 4; i++)
+        {
             if (mic_bit[i] == 0 && timestamp - mic_ts_cur[i] > TSTH)
                 mic_bit[i] = 1;
         }
         if (timestamp - last_ts > TSTH)
             order = 0;
-        //mic_bit[0] = HAL_GPIO_ReadPin(MIC_IN0_GPIO_Port, MIC_IN0_Pin);
-        //mic_bit[1] = HAL_GPIO_ReadPin(MIC_IN1_GPIO_Port, MIC_IN1_Pin);
-        //mic_bit[2] = HAL_GPIO_ReadPin(MIC_IN2_GPIO_Port, MIC_IN2_Pin);
-        //mic_bit[3] = HAL_GPIO_ReadPin(MIC_IN3_GPIO_Port, MIC_IN3_Pin);
-        //for (uint8_t i = 0; i < 4; i++)
-        //    push(&mic_que[i], mic_bit[i]);
+        // mic_bit[0] = HAL_GPIO_ReadPin(MIC_IN0_GPIO_Port, MIC_IN0_Pin);
+        // mic_bit[1] = HAL_GPIO_ReadPin(MIC_IN1_GPIO_Port, MIC_IN1_Pin);
+        // mic_bit[2] = HAL_GPIO_ReadPin(MIC_IN2_GPIO_Port, MIC_IN2_Pin);
+        // mic_bit[3] = HAL_GPIO_ReadPin(MIC_IN3_GPIO_Port, MIC_IN3_Pin);
+        // for (uint8_t i = 0; i < 4; i++)
+        //     push(&mic_que[i], mic_bit[i]);
 
-        //memcpy(mic_lst, mic_cur, sizeof(mic_cur));
+        // memcpy(mic_lst, mic_cur, sizeof(mic_cur));
 
-        //window_process();
+        // window_process();
 
-        //update_timestamp();
+        // update_timestamp();
     }
     // if (TIM1 == htim->Instance && is_timing)
     //{

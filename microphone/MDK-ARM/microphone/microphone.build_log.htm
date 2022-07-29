@@ -26,149 +26,33 @@ Project File Date:  07/29/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\MyDate\Keil\ARM\ARMCC\Bin'
-Rebuild target 'microphone'
-assembling startup_stm32f407xx.s...
-compiling dtoa.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\dtoa.c(187): warning:  #1-D: last line of file ends without a newline
-  }
-..\Core\Src\dtoa.c: 2 warnings, 0 errors
-compiling tim.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
-      void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
-      void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
-      void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
-      void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
-      vector2 calculate_sound_source();
-../Core/Src/tim.c: 6 warnings, 0 errors
-compiling stm32f4xx_hal_flash.c...
-compiling stm32f4xx_hal_rcc_ex.c...
-compiling stm32f4xx_hal_gpio.c...
-compiling gpio.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
-      void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
-      void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
-      void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
-      void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
-      vector2 calculate_sound_source();
-../Core/Src/gpio.c: 6 warnings, 0 errors
-compiling stm32f4xx_it.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
-      void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
-      void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
-      void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
-      void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
-      vector2 calculate_sound_source();
-../Core/Inc/stm32f4xx_it.h(71): warning:  #1295-D: Deprecated declaration time_begin - give arg types
-      void time_begin();
-../Core/Inc/stm32f4xx_it.h(72): warning:  #1295-D: Deprecated declaration print_tick - give arg types
-      void print_tick();
-../Core/Src/stm32f4xx_it.c(350): warning:  #223-D: function "USER_UART_IDLECallback" declared implicitly
-          USER_UART_IDLECallback(&huart3);
-../Core/Src/stm32f4xx_it.c: 9 warnings, 0 errors
-compiling dma.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
-      void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
-      void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
-      void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
-      void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
-      vector2 calculate_sound_source();
-../Core/Src/dma.c: 6 warnings, 0 errors
-compiling stm32f4xx_hal_flash_ex.c...
-compiling stm32f4xx_hal_tim.c...
-compiling usart.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
-      void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
-      void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
-      void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
-      void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
-      vector2 calculate_sound_source();
-../Core/Src/usart.c(122): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-      HAL_UART_Receive_DMA(&huart3, usart3_buffer, STR_MAX_SIZE);
-../Core/Src/usart.c(405): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-      HAL_UART_Receive_DMA(huart, buffer, STR_MAX_SIZE);
-../Core/Src/usart.c: 8 warnings, 0 errors
-compiling stm32f4xx_hal_flash_ramfunc.c...
-compiling stm32f4xx_hal_msp.c...
-../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
-      void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
-      void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
-      void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
-      void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
-      vector2 calculate_sound_source();
-../Core/Src/stm32f4xx_hal_msp.c: 6 warnings, 0 errors
+Build target 'microphone'
 compiling main.c...
 ../Core/Inc/dtoa.h(34): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Inc/main.h(68): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
+../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration microphone_init - give arg types
       void microphone_init();
-../Core/Inc/main.h(69): warning:  #1295-D: Deprecated declaration time_init - give arg types
+../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration time_init - give arg types
       void time_init();
-../Core/Inc/main.h(70): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
+../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_delta_distance - give arg types
       void calculate_delta_distance();
-../Core/Inc/main.h(71): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
+../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_chans_distance - give arg types
       void calculate_chans_distance();
-../Core/Inc/main.h(72): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
+../Core/Inc/main.h(73): warning:  #1295-D: Deprecated declaration calculate_sound_source - give arg types
       vector2 calculate_sound_source();
-../Core/Src/main.c(91): warning:  #68-D: integer conversion resulted in a change of sign
+../Core/Inc/main.h(75): warning:  #1295-D: Deprecated declaration print_tick - give arg types
+      void print_tick();
+../Core/Inc/main.h(76): warning:  #1295-D: Deprecated declaration calculate_order - give arg types
+      void calculate_order();
+../Core/Src/main.c(90): warning:  #68-D: integer conversion resulted in a change of sign
           return -1;
-../Core/Src/main.c(160): warning:  #223-D: function "print_tick" declared implicitly
-                  print_tick();
-../Core/Src/main.c(142): warning:  #550-D: variable "sound_source"  was set but never used
+../Core/Src/main.c(141): warning:  #550-D: variable "sound_source"  was set but never used
       vector2 sound_source;
-../Core/Src/main.c: 9 warnings, 0 errors
-compiling stm32f4xx_hal_rcc.c...
-compiling stm32f4xx_hal_tim_ex.c...
-compiling stm32f4xx_hal_cortex.c...
-compiling stm32f4xx_hal.c...
-compiling stm32f4xx_hal_exti.c...
-compiling stm32f4xx_hal_pwr_ex.c...
-compiling system_stm32f4xx.c...
-compiling stm32f4xx_hal_pwr.c...
-compiling stm32f4xx_hal_dma_ex.c...
-compiling stm32f4xx_hal_dma.c...
-compiling stm32f4xx_hal_uart.c...
+../Core/Src/main.c: 10 warnings, 0 errors
 linking...
-Program Size: Code=15372 RO-data=472 RW-data=64 ZI-data=6752  
+Program Size: Code=15124 RO-data=472 RW-data=56 ZI-data=2776  
 FromELF: creating hex file...
-"microphone\microphone.axf" - 0 Error(s), 52 Warning(s).
+"microphone\microphone.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -192,7 +76,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:09
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
