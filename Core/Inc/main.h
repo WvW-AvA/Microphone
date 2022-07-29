@@ -32,6 +32,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#define _USE_MATH_DEFINES
 #include "stdio.h"
 #include "tim.h"
 #include "usart.h"
@@ -39,12 +40,12 @@ extern "C" {
 #include "string.h"
 #include "stdlib.h"
 #include "math.h"
+#include "pan.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-extern uint8_t error_fix;
-extern uint8_t usart1_RxBuffer[4];
+//extern uint8_t usart1_RxBuffer[4];
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -68,6 +69,7 @@ int is_str_equal(char *str_p1, uint8_t size1, char *str_p2);
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
 void USER_UART_IDLECallback(UART_HandleTypeDef *huart);
+#define error_fix 100
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

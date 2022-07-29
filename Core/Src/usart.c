@@ -23,10 +23,16 @@
 /* USER CODE BEGIN 0 */
 #include "main.h"
 #define STR_MAX_SIZE 32
+extern uint8_t tmp;
 uint8_t usart1_RxBuffer[4];
+uint8_t usart1_RxBufferLen = 0;
+uint8_t usart1_RxBufferIndex = 0;
+char usart1_TransBuffer[4];
 uint8_t usart1_UART_RxBuffer[256];
 uint8_t usart1_UART_Rx_Cnt = 0;
 uint8_t receive_angle=0;
+int receive_x=0;
+int receive_y=0;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -236,15 +242,28 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef* usartHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	printf("enter\r\n");
-if(huart -> Instance == huart1.Instance ) {
-		//usart1_UART_RxBuffer[++usart1_UART_Rx_Cnt] = usart1_RxBuffer;  
-	printf("ubuffer0: %d\r\n",usart1_RxBuffer[0]);
-	printf("ubuffer1: %d\r\n",usart1_RxBuffer[1]);
-	printf("ubuffer2: %d\r\n",usart1_RxBuffer[2]);
-	printf("ubuffer3: %d\r\n",usart1_RxBuffer[3]);
-	if(
-	HAL_UART_Receive_IT(&huart1,usart1_RxBuffer,4);
+
+  if (huart -> Instance == huart1.Instance) {
+      static int state; // 0 (^)-> 1 ($)-> 0
+      int will_switch = (state == 0 && tmp == '^') || (state == 1 && tmp == '$');
+      if (will_switch) {
+          if (state == 1) {
+              usart1_RxBuffer[usart1_RxBufferIndex] = '\0';
+              uint8_t axis = usart1_RxBuffer[0];
+              uint8_t *p = &usart1_RxBuffer[1];
+              int num = atoi(p);
+              if (axis == 'x') receive_x = num;
+              else if (axis == 'y') receive_y = num;
+          }
+
+          state = !state;
+          usart1_RxBufferIndex = 0;
+          return;
+      }
+
+      if (state)
+          usart1_RxBuffer[usart1_RxBufferIndex++] = tmp;
+  }
 }
 //		if(usart1_UART_RxBuffer[0] == 'a'){//&& (usart1_UART_RxBuffer[usart1_UART_Rx_Cnt -1] == 'b') )
 //			printf("receive\r\n");
@@ -278,7 +297,8 @@ if(huart -> Instance == huart1.Instance ) {
 //    free(argv);
 //    HAL_UART_Receive_DMA(huart,buffer, STR_MAX_SIZE);
 //		__HAL_UART_CLEAR_IDLEFLAG(huart);
-}
+
+
 //void Usart1_Data_Detect(uint8_t *usart1_UART_RxBuffer, uint8_t rx_cnt)
 //{
 //	receive_angle=0;
