@@ -26,6 +26,7 @@
 extern uint8_t tmp;
 uint8_t usart1_RxBuffer[4];
 uint8_t usart1_RxBufferLen = 0;
+uint8_t usart1_RxBufferIndex = 0;
 char usart1_TransBuffer[4];
 uint8_t usart1_UART_RxBuffer[256];
 uint8_t usart1_UART_Rx_Cnt = 0;
@@ -241,42 +242,27 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef* usartHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	
-  if(huart -> Instance == huart1.Instance ) {
-		++usart1_RxBufferLen;
-		//usart1_UART_RxBuffer[++usart1_UART_Rx_Cnt] = usart1_RxBuffer;  
-//	printf("ubuffer0: %d\r\n",usart1_RxBuffer[0]);
-//	printf("ubuffer1: %d\r\n",usart1_RxBuffer[1]);
-//	printf("ubuffer2: %d\r\n",usart1_RxBuffer[2]);
-//	printf("ubuffer3: %d\r\n",usart1_RxBuffer[3]);
-	  if(usart1_RxBufferLen == 4 && usart1_RxBuffer[0]=='x')
-	  {
-		  for(int i=1;i<4;i++)
-		  {
-			  usart1_TransBuffer[i-1]=usart1_RxBuffer[i];
-		  }
-		  usart1_TransBuffer[3] = '\0';
-			sscanf(usart1_TransBuffer, "%d", &receive_x);
-		  printf("x:    %d\r\n",receive_x);
-		  //send_L_angle(receive_x);
-			usart1_RxBufferLen = 0;
-	  }
-	  else if(usart1_RxBufferLen == 4 && usart1_RxBuffer[0]=='y')
-	  {
-		  for(int i=1;i<4;i++)
-		  {
-  			usart1_TransBuffer[i-1]=usart1_RxBuffer[i];
-	  	}
-		  usart1_TransBuffer[3] = '\0';
-			sscanf(usart1_TransBuffer, "%d", &receive_x);
-	  	printf("y:    %d\r\n",receive_y);
-		  //send_H_angle(receive_y);
-			usart1_RxBufferLen = 0;
-	  }
-	  printf("outit\r\n");
-	  HAL_UART_Receive_IT(&huart1,usart1_RxBuffer,4);
-		
-		if (usart1_RxBufferLen >= 4) printf("panic\r\n");
+
+  if (huart -> Instance == huart1.Instance) {
+      static int state; // 0 (^)-> 1 ($)-> 0
+      int will_switch = (state == 0 && tmp == '^') || (state == 1 && tmp == '$');
+      if (will_switch) {
+          if (state == 1) {
+              usart1_RxBuffer[usart1_RxBufferIndex] = '\0';
+              uint8_t axis = usart1_RxBuffer[0];
+              uint8_t *p = &usart1_RxBuffer[1];
+              int num = atoi(p);
+              if (axis == 'x') receive_x = num;
+              else if (axis == 'y') receive_y = num;
+          }
+
+          state = !state;
+          usart1_RxBufferIndex = 0;
+          return;
+      }
+
+      if (state)
+          usart1_RxBuffer[usart1_RxBufferIndex++] = tmp;
   }
 }
 //		if(usart1_UART_RxBuffer[0] == 'a'){//&& (usart1_UART_RxBuffer[usart1_UART_Rx_Cnt -1] == 'b') )
