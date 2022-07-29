@@ -27,7 +27,7 @@ float vector2_dot_vector2(vector2 v1, vector2 v2);
 vector2 vector2_add_vector2(vector2 v1, vector2 v2);
 vector2 chans_method(vector2 mp0, vector2 mp1, vector2 mp2, float d1, float d2);
 
-void genfunc(float x1, float b_y1, float x2, float y2, float x3, float y3, float s1, float s2, float *x, float *y);
+vector2 genfunc(float x1, float b_y1, float x2, float y2, float x3, float y3, float s1, float s2);
 vector2 chans_meth(vector2 mp0, vector2 mp1, vector2 mp2, float d1, float d2);
 
 void print_vector(vector2 v);

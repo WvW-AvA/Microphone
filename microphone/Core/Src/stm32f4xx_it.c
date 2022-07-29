@@ -354,7 +354,6 @@ void update_timestamp()
             if (order >= 4)
             {
                 sample_flag = 1;
-                print_tick();
                 order = 0;
             }
         }

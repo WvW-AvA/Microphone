@@ -60,8 +60,13 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 #define SOUND_SPEED 346.0f
-#define TIME_TICK_RATE 5.59238092E-6f
+#define TIME_TICK_RATE 1.0E-3f
+#define DISTANCE_LOG
+#define SS_POS_LOG
+#define TIMESTAMP_LOG
+
 int mp_timestamp[4] = {0};
+int mp_ts_cpy[4] = {0};
 float delta_distance[3][2] = {0};
 float chans_distance[3][2] = {0};
 vector2 mp_pos[4];
@@ -72,6 +77,7 @@ extern uint8_t mic_cur[4];
 
 extern uint8_t order;
 extern uint8_t mic_order[4];
+uint8_t mic_order_cpy[4];
 
 void push(Queue *q, uint8_t x)
 {
@@ -140,19 +146,26 @@ int main(void)
     /* USER CODE BEGIN WHILE */
     while (1)
     {
-        if ((mic_cur[0] * mic_cur[1] * mic_cur[2] * mic_cur[3]))
+        if ((!mic_cur[0] * !mic_cur[1] * !mic_cur[2] * !mic_cur[3]))
         {
-            order = 0;
             if (sample_flag)
             {
                 sample_flag = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    mic_order_cpy[i] = mic_order[i];
+                    mp_ts_cpy[i] = mp_timestamp[i];
+                }
+#ifdef TIMESTAMP_LOG
+                print_tick();
                 printf("begin calculate\n");
+#endif
                 calculate_chans_distance();
                 sound_source = calculate_sound_source();
-                printf("ss pos:");
-                print_vector(sound_source);
             }
         }
+        if (mic_cur[0] * mic_cur[1] * mic_cur[2] * mic_cur[3])
+            order = 0;
         /* USER CODE END WHILE */
         /* USER CODE BEGIN 3 */
     }
@@ -224,8 +237,9 @@ inline void microphone_init()
     mp_pos[3].y = -15.5;
 }
 
-inline float get_det_d(float ts1, float ts2)
+inline float get_det_d(int ts1, int ts2)
 {
+    ts1 = ts1 < ts2 ? ts1 : ts1 - 65535;
     return ((int)(ts1 - ts2) * TIME_TICK_RATE * SOUND_SPEED);
 }
 
@@ -244,37 +258,45 @@ void calculate_delta_distance()
 void calculate_chans_distance()
 {
 
-    chans_distance[0][0] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[1]]);
-    chans_distance[0][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[2]]);
+    chans_distance[0][0] = get_det_d(mp_ts_cpy[mic_order_cpy[0]], mp_ts_cpy[mic_order_cpy[1]]);
+    chans_distance[0][1] = get_det_d(mp_ts_cpy[mic_order_cpy[0]], mp_ts_cpy[mic_order_cpy[2]]);
 
-    chans_distance[1][0] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[1]]);
-    chans_distance[1][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[3]]);
+    chans_distance[1][0] = get_det_d(mp_ts_cpy[mic_order_cpy[0]], mp_ts_cpy[mic_order_cpy[1]]);
+    chans_distance[1][1] = get_det_d(mp_ts_cpy[mic_order_cpy[0]], mp_ts_cpy[mic_order_cpy[3]]);
 
-    chans_distance[2][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[2]]);
-    chans_distance[2][1] = get_det_d(mp_timestamp[mic_order[0]], mp_timestamp[mic_order[3]]);
-
+    chans_distance[2][0] = get_det_d(mp_ts_cpy[mic_order_cpy[0]], mp_ts_cpy[mic_order_cpy[2]]);
+    chans_distance[2][1] = get_det_d(mp_ts_cpy[mic_order_cpy[0]], mp_ts_cpy[mic_order_cpy[3]]);
+#ifdef DISTANCE_LOG
     for (int i = 0; i < 3; i++)
     {
-        printf("cd%d:%f %f ", i, chans_distance[i][0], chans_distance[i][1]);
+        printf("cd%d:%f %f\n", i, chans_distance[i][0], chans_distance[i][1]);
     }
     printf("\n");
+#endif
 }
+
 #define CHANS_METHOD
 vector2 calculate_sound_source()
 {
     vector2 res = {0};
 #ifdef CHANS_METHOD
     vector2 sp[3];
-    sp[0] = chans_meth(mp_pos[mic_order[0]], mp_pos[mic_order[1]], mp_pos[mic_order[2]], chans_distance[0][0], chans_distance[0][1]);
-    sp[1] = chans_meth(mp_pos[mic_order[0]], mp_pos[mic_order[1]], mp_pos[mic_order[3]], chans_distance[1][0], chans_distance[1][1]);
-    sp[2] = chans_meth(mp_pos[mic_order[0]], mp_pos[mic_order[2]], mp_pos[mic_order[3]], chans_distance[2][0], chans_distance[2][1]);
+    sp[0] = chans_meth(mp_pos[mic_order_cpy[0]], mp_pos[mic_order_cpy[1]], mp_pos[mic_order_cpy[2]], chans_distance[0][0], chans_distance[0][1]);
+    sp[1] = chans_meth(mp_pos[mic_order_cpy[0]], mp_pos[mic_order_cpy[1]], mp_pos[mic_order_cpy[3]], chans_distance[1][0], chans_distance[1][1]);
+    sp[2] = chans_meth(mp_pos[mic_order_cpy[0]], mp_pos[mic_order_cpy[2]], mp_pos[mic_order_cpy[3]], chans_distance[2][0], chans_distance[2][1]);
     for (int i = 0; i < 3; i++)
     {
         res = vector2_add_vector2(res, sp[i]);
         print_vector(sp[i]);
     }
     res = vector2_plus(res, (1.0f / 3.0f));
+#ifdef SS_POS_LOG
+    printf("ss pos:");
+    print_vector(res);
 #endif
+
+#endif
+
     return res;
 }
 

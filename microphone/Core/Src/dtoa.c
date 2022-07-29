@@ -120,8 +120,9 @@ vector2 chans_method(vector2 mp0, vector2 mp1, vector2 mp2, float d1, float d2)
     return ret;
 }
 
-void genfunc(float x1, float b_y1, float x2, float y2, float x3, float y3, float s1, float s2, float *x, float *y)
+vector2 genfunc(float x1, float b_y1, float x2, float y2, float x3, float y3, float s1, float s2)
 {
+    vector2 ret;
     float k1;
     float k2;
     float k3;
@@ -164,19 +165,20 @@ void genfunc(float x1, float b_y1, float x2, float y2, float x3, float y3, float
     r2 = (-b - (float)sqrt(b * b - 4.0F * a * c)) / (2.0F * a);
     if (r1 > 0.0F)
     {
-        *x = p1 + q1 * r1;
-        *y = p2 + q2 * r1;
+        ret.x = p1 + q1 * r1;
+        ret.y = p2 + q2 * r1;
     }
     else
     {
-        *x = p1 + q1 * r2;
-        *y = p2 + q2 * r2;
+        ret.x = p1 + q1 * r2;
+        ret.y = p2 + q2 * r2;
     }
+    return ret;
 }
-vector2 chans_meth(vector2 mp0, vector2 mp1, vector2 mp2, float d1, float d2)
+inline vector2 chans_meth(vector2 mp0, vector2 mp1, vector2 mp2, float d1, float d2)
 {
     vector2 ret;
-    genfunc(mp0.x, mp0.y, mp1.x, mp1.y, mp2.x, mp2.y, d1, d2, &(ret.x), &(ret.y));
+    ret = genfunc(mp0.x, mp0.y, mp1.x, mp1.y, mp2.x, mp2.y, d1, d2);
     return ret;
 }
 inline void print_vector(vector2 v)

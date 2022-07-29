@@ -41,8 +41,8 @@ extern "C"
 
     /* Exported types ------------------------------------------------------------*/
     /* USER CODE BEGIN ET */
-#define QUEUE_SIZE 20
-#define WINDOW_SIZE 5
+#define QUEUE_SIZE 1000
+#define WINDOW_SIZE 500
 
     typedef struct _queue
     {
@@ -61,7 +61,7 @@ extern "C"
     extern int riseTimes;
     extern int mp_timestamp[4];
     extern float delta_distance[3][2];
-    extern float chans_distance[1][2];
+    extern float chans_distance[3][2];
     extern vector2 mp_pos[4];
     extern vector2 sound_source_pos;
 
@@ -71,6 +71,7 @@ extern "C"
     void calculate_delta_distance();
     void calculate_chans_distance();
     vector2 calculate_sound_source();
+    float get_det_d(int ts1, int ts2);
 
     /* USER CODE END EM */
 
