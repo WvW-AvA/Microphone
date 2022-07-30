@@ -296,7 +296,7 @@ void print_to_stm32()
 {
     printf_huart = &huart2;
     printf("angle %f posx %f posy %f", angle, sound_source_pos.x, sound_source_pos.y);
-    printf_huart = &huart1;
+    printf_huart = &huart3;
 }
 inline float get_det_d(int ts1, int ts2)
 {
