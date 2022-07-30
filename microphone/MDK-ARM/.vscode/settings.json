@@ -8,6 +8,7 @@
         "dtoa.h": "c",
         "math.h": "c",
         "*.tcc": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "usart.h": "c"
     }
 }

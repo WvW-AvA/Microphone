@@ -61,11 +61,13 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 //#define DISTANCE_LOG
-#define SS_POS_LOG
+//#define SS_POS_LOG
 #define TIMESTAMP_LOG
+#define ANGLE_LOG
 
 float SOUND_SPEED = 346.0f;
 float TIME_TICK_RATE = 0.5E-3f;
+
 int mp_timestamp[4] = {0};
 int mp_ts_cpy[4] = {0};
 float delta_distance[3][2] = {0};
@@ -78,9 +80,9 @@ vector2 sound_source_pos;
 
 uint8_t sample_flag = 0;
 extern uint8_t mic_bit[4];
-
 uint8_t mic_order_cpy[4];
 uint8_t area_bound[6][2];
+float angle;
 void push(Queue *q, uint8_t x)
 {
     q->data[q->front++] = x;
@@ -171,8 +173,10 @@ int main(void)
                     print_tick();
                     printf("begin calculate\n");
 #endif
+                    calculate_angle();
                     calculate_chans_distance();
                     sound_source = calculate_sound_source();
+                    print_to_stm32();
                     sample_flag = 0;
                 }
             }
@@ -242,18 +246,22 @@ inline void time_init()
 }
 inline void microphone_init()
 {
-    mp_pos[1].x = -500;
+    mp_pos[1].x = -250;
     mp_pos[1].y = 0;
-    mp_pos[3].x = 500;
+    mp_pos[3].x = 250;
     mp_pos[3].y = 0;
-    mp_pos[0].x = -500;
+    mp_pos[0].x = -250;
     mp_pos[0].y = -500;
-    mp_pos[2].x = 500;
+    mp_pos[2].x = 250;
     mp_pos[2].y = -500;
+
     x_bound[0] = -1500;
     x_bound[1] = 1500;
     y_bound[0] = -5000;
     y_bound[1] = 5000;
+
+    mc_fix_bias[3] = 2000;
+    mc_fix_bias[2] = 500;
 }
 inline void calculate_order()
 {
@@ -284,7 +292,12 @@ void print_tick()
         printf("mp_timestamp[%d] = %d\n", i, mp_ts_cpy[i]);
     printf("\n");
 }
-
+void print_to_stm32()
+{
+    printf_huart = &huart2;
+    printf("angle %f posx %f posy %f", angle, sound_source_pos.x, sound_source_pos.y);
+    printf_huart = &huart1;
+}
 inline float get_det_d(int ts1, int ts2)
 {
     return ((int)(ts1 - ts2) * TIME_TICK_RATE * SOUND_SPEED);
@@ -304,7 +317,25 @@ void calculate_delta_distance()
     delta_distance[2][0] = get_det_d(mp_timestamp[0], mp_timestamp[3]);
     delta_distance[2][1] = get_det_d(mp_timestamp[1], mp_timestamp[2]);
 }
+void calculate_angle()
+{
+    float dt1 = (get_det_d(mp_ts_cpy[2], mp_ts_cpy[0]));
+    float dt2 = (get_det_d(mp_ts_cpy[3], mp_ts_cpy[1]));
+    if (dt1 > 500 && dt2 < 500)
+        dt1 = dt2;
+    if (dt2 > 500 && dt1 < 500)
+        dt2 = dt1;
 
+    float value1 = (180.f / 3.141592f) * acosf(dt1 / 500);
+    float value2 = (180.f / 3.141592f) * acosf(dt2 / 500);
+    if ((value1 - value2) < 10)
+    {
+        angle = (value1 + value2) / 2;
+    }
+#ifdef ANGLE_LOG
+    printf("dt %f %f\n value %f %f\n, angle :%f\n", dt1, dt2, value1, value2, angle);
+#endif
+}
 void calculate_chans_distance()
 {
 

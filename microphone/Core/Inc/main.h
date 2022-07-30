@@ -80,6 +80,8 @@ extern "C"
     void time_beg(uint8_t index);
     void calculate_order();
     uint8_t is_within_bound(vector2 v);
+    void calculate_angle();
+		void print_to_stm32();
     /* USER CODE END EM */
 
     /* Exported functions prototypes ---------------------------------------------*/
