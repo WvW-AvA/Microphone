@@ -323,13 +323,12 @@ void calculate_angle()
 {
     float dt1 = (get_det_d(mp_ts_cpy[2], mp_ts_cpy[0]));
     float dt2 = (get_det_d(mp_ts_cpy[3], mp_ts_cpy[1]));
-    if (dt1 > 500 && dt2 < 500)
-        dt1 = dt2;
-    if (dt2 > 500 && dt1 < 500)
-        dt2 = dt1;
-
-    float value1 = (180.f / 3.141592f) * acosf(dt1 / 500);
-    float value2 = (180.f / 3.141592f) * acosf(dt2 / 500);
+    if (abs(dt1) > 5000 && abs(dt2) > 5000)
+    {
+        return;
+    }
+    float value1 = (180.f / 3.141592f) * acosf(dt1 / 5000);
+    float value2 = (180.f / 3.141592f) * acosf(dt2 / 5000);
     if ((value1 - value2) < 10)
     {
         angle = (value1 + value2) / 2;
