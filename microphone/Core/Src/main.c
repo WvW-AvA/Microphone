@@ -83,6 +83,7 @@ extern uint8_t mic_bit[4];
 uint8_t mic_order_cpy[4];
 uint8_t area_bound[6][2];
 float angle = 90;
+float value1 = 90, value2 = 90;
 void push(Queue *q, uint8_t x)
 {
     q->data[q->front++] = x;
@@ -323,12 +324,18 @@ void calculate_angle()
 {
     float dt1 = (get_det_d(mp_ts_cpy[2], mp_ts_cpy[0]));
     float dt2 = (get_det_d(mp_ts_cpy[3], mp_ts_cpy[1]));
-    if (abs(dt1) > angle_bound && abs(dt2) > angle_bound)
+    if (abs(dt1) < angle_bound)
     {
-        return;
+        float temp = (180.f / 3.141592f) * acosf(dt1 / angle_bound);
+        if (temp > 50 && temp < 140)
+            value1 = temp;
     }
-    float value1 = (180.f / 3.141592f) * acosf(dt1 / angle_bound);
-    float value2 = (180.f / 3.141592f) * acosf(dt2 / angle_bound);
+    if (abs(dt2) < angle_bound)
+    {
+        float temp = (180.f / 3.141592f) * acosf(dt1 / angle_bound);
+        if (temp > 50 && temp < 140)
+            value2 = temp;
+    }
     angle = (value1 + value2) / 2;
 #ifdef ANGLE_LOG
     printf("dt %f %f\n value %f %f\n, angle :%f\n", dt1, dt2, value1, value2, angle);

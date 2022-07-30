@@ -1690,51 +1690,51 @@ Image Symbol Table
     _sputc                                   0x08003cf3   Thumb Code    10  printfa.o(i._sputc)
     i.arg_prase                              0x08003cfc   Section        0  main.o(i.arg_prase)
     i.calculate_angle                        0x08003ee8   Section        0  main.o(i.calculate_angle)
-    i.calculate_chans_distance               0x0800400c   Section        0  main.o(i.calculate_chans_distance)
-    i.calculate_order                        0x08004098   Section        0  main.o(i.calculate_order)
-    i.calculate_sound_source                 0x080040ec   Section        0  main.o(i.calculate_sound_source)
-    i.chans_meth                             0x0800421c   Section        0  dtoa.o(i.chans_meth)
-    i.fputc                                  0x08004220   Section        0  usart.o(i.fputc)
-    i.free                                   0x0800423c   Section        0  malloc.o(i.free)
-    i.genfunc                                0x0800428c   Section        0  dtoa.o(i.genfunc)
-    i.get_det_d                              0x080043e4   Section        0  main.o(i.get_det_d)
-    i.is_str_equal                           0x08004408   Section        0  main.o(i.is_str_equal)
-    i.is_within_bound                        0x08004428   Section        0  main.o(i.is_within_bound)
-    i.main                                   0x08004470   Section        0  main.o(i.main)
-    i.malloc                                 0x0800455c   Section        0  malloc.o(i.malloc)
-    i.microphone_init                        0x080045c8   Section        0  main.o(i.microphone_init)
-    i.print_tick                             0x08004658   Section        0  main.o(i.print_tick)
-    i.print_to_stm32                         0x080046cc   Section        0  main.o(i.print_to_stm32)
-    i.print_vector                           0x08004758   Section        0  dtoa.o(i.print_vector)
-    i.sqrtf                                  0x08004798   Section        0  sqrtf.o(i.sqrtf)
-    i.time_init                              0x080047d8   Section        0  main.o(i.time_init)
-    i.update_timestamp                       0x0800481c   Section        0  stm32f4xx_it.o(i.update_timestamp)
-    i.vector2_add_vector2                    0x08004880   Section        0  dtoa.o(i.vector2_add_vector2)
-    i.vector2_plus                           0x0800488a   Section        0  dtoa.o(i.vector2_plus)
-    .constdata                               0x08004894   Section        8  stm32f4xx_hal_dma.o(.constdata)
-    flagBitshiftOffset                       0x08004894   Data           8  stm32f4xx_hal_dma.o(.constdata)
-    .constdata                               0x0800489c   Section       16  system_stm32f4xx.o(.constdata)
-    .constdata                               0x080048ac   Section        8  system_stm32f4xx.o(.constdata)
-    .constdata                               0x080048b4   Section      129  ctype_o.o(.constdata)
-    .constdata                               0x08004938   Section        4  ctype_o.o(.constdata)
-    table                                    0x08004938   Data           4  ctype_o.o(.constdata)
-    .conststring                             0x0800493c   Section       15  dtoa.o(.conststring)
-    .data                                    0x20000000   Section       48  main.o(.data)
-    .data                                    0x20000030   Section        4  usart.o(.data)
-    .data                                    0x20000034   Section       16  stm32f4xx_it.o(.data)
-    .data                                    0x20000044   Section       12  stm32f4xx_hal.o(.data)
-    .data                                    0x20000050   Section        4  system_stm32f4xx.o(.data)
-    .data                                    0x20000054   Section        4  stdout.o(.data)
-    .data                                    0x20000058   Section        4  mvars.o(.data)
-    .data                                    0x2000005c   Section        4  mvars.o(.data)
-    .data                                    0x20000060   Section        4  errno.o(.data)
-    _errno                                   0x20000060   Data           4  errno.o(.data)
-    .bss                                     0x20000064   Section      128  main.o(.bss)
-    .bss                                     0x200000e4   Section      216  tim.o(.bss)
-    .bss                                     0x200001bc   Section      876  usart.o(.bss)
-    .bss                                     0x20000528   Section       32  stm32f4xx_it.o(.bss)
-    HEAP                                     0x20000548   Section      512  startup_stm32f407xx.o(HEAP)
-    STACK                                    0x20000748   Section     1024  startup_stm32f407xx.o(STACK)
+    i.calculate_chans_distance               0x08004038   Section        0  main.o(i.calculate_chans_distance)
+    i.calculate_order                        0x080040c4   Section        0  main.o(i.calculate_order)
+    i.calculate_sound_source                 0x08004118   Section        0  main.o(i.calculate_sound_source)
+    i.chans_meth                             0x08004248   Section        0  dtoa.o(i.chans_meth)
+    i.fputc                                  0x0800424c   Section        0  usart.o(i.fputc)
+    i.free                                   0x08004268   Section        0  malloc.o(i.free)
+    i.genfunc                                0x080042b8   Section        0  dtoa.o(i.genfunc)
+    i.get_det_d                              0x08004410   Section        0  main.o(i.get_det_d)
+    i.is_str_equal                           0x08004434   Section        0  main.o(i.is_str_equal)
+    i.is_within_bound                        0x08004454   Section        0  main.o(i.is_within_bound)
+    i.main                                   0x0800449c   Section        0  main.o(i.main)
+    i.malloc                                 0x08004588   Section        0  malloc.o(i.malloc)
+    i.microphone_init                        0x080045f4   Section        0  main.o(i.microphone_init)
+    i.print_tick                             0x08004684   Section        0  main.o(i.print_tick)
+    i.print_to_stm32                         0x080046f8   Section        0  main.o(i.print_to_stm32)
+    i.print_vector                           0x08004784   Section        0  dtoa.o(i.print_vector)
+    i.sqrtf                                  0x080047c4   Section        0  sqrtf.o(i.sqrtf)
+    i.time_init                              0x08004804   Section        0  main.o(i.time_init)
+    i.update_timestamp                       0x08004848   Section        0  stm32f4xx_it.o(i.update_timestamp)
+    i.vector2_add_vector2                    0x080048ac   Section        0  dtoa.o(i.vector2_add_vector2)
+    i.vector2_plus                           0x080048b6   Section        0  dtoa.o(i.vector2_plus)
+    .constdata                               0x080048c0   Section        8  stm32f4xx_hal_dma.o(.constdata)
+    flagBitshiftOffset                       0x080048c0   Data           8  stm32f4xx_hal_dma.o(.constdata)
+    .constdata                               0x080048c8   Section       16  system_stm32f4xx.o(.constdata)
+    .constdata                               0x080048d8   Section        8  system_stm32f4xx.o(.constdata)
+    .constdata                               0x080048e0   Section      129  ctype_o.o(.constdata)
+    .constdata                               0x08004964   Section        4  ctype_o.o(.constdata)
+    table                                    0x08004964   Data           4  ctype_o.o(.constdata)
+    .conststring                             0x08004968   Section       15  dtoa.o(.conststring)
+    .data                                    0x20000000   Section       56  main.o(.data)
+    .data                                    0x20000038   Section        4  usart.o(.data)
+    .data                                    0x2000003c   Section       16  stm32f4xx_it.o(.data)
+    .data                                    0x2000004c   Section       12  stm32f4xx_hal.o(.data)
+    .data                                    0x20000058   Section        4  system_stm32f4xx.o(.data)
+    .data                                    0x2000005c   Section        4  stdout.o(.data)
+    .data                                    0x20000060   Section        4  mvars.o(.data)
+    .data                                    0x20000064   Section        4  mvars.o(.data)
+    .data                                    0x20000068   Section        4  errno.o(.data)
+    _errno                                   0x20000068   Data           4  errno.o(.data)
+    .bss                                     0x2000006c   Section      128  main.o(.bss)
+    .bss                                     0x200000ec   Section      216  tim.o(.bss)
+    .bss                                     0x200001c4   Section      876  usart.o(.bss)
+    .bss                                     0x20000530   Section       32  stm32f4xx_it.o(.bss)
+    HEAP                                     0x20000550   Section      512  startup_stm32f407xx.o(HEAP)
+    STACK                                    0x20000750   Section     1024  startup_stm32f407xx.o(STACK)
 
     Global Symbols
 
@@ -2027,77 +2027,79 @@ Image Symbol Table
     __set_errno                              0x0800344d   Thumb Code     6  errno.o(i.__set_errno)
     _is_digit                                0x080035dd   Thumb Code    14  scanf_fp.o(i._is_digit)
     arg_prase                                0x08003cfd   Thumb Code   314  main.o(i.arg_prase)
-    calculate_angle                          0x08003ee9   Thumb Code   242  main.o(i.calculate_angle)
-    calculate_chans_distance                 0x0800400d   Thumb Code   132  main.o(i.calculate_chans_distance)
-    calculate_order                          0x08004099   Thumb Code    74  main.o(i.calculate_order)
-    calculate_sound_source                   0x080040ed   Thumb Code   288  main.o(i.calculate_sound_source)
-    chans_meth                               0x0800421d   Thumb Code     4  dtoa.o(i.chans_meth)
-    fputc                                    0x08004221   Thumb Code    22  usart.o(i.fputc)
-    free                                     0x0800423d   Thumb Code    76  malloc.o(i.free)
-    genfunc                                  0x0800428d   Thumb Code   344  dtoa.o(i.genfunc)
-    get_det_d                                0x080043e5   Thumb Code    30  main.o(i.get_det_d)
-    is_str_equal                             0x08004409   Thumb Code    30  main.o(i.is_str_equal)
-    is_within_bound                          0x08004429   Thumb Code    68  main.o(i.is_within_bound)
-    main                                     0x08004471   Thumb Code   194  main.o(i.main)
-    malloc                                   0x0800455d   Thumb Code    92  malloc.o(i.malloc)
-    microphone_init                          0x080045c9   Thumb Code   102  main.o(i.microphone_init)
-    print_tick                               0x08004659   Thumb Code    64  main.o(i.print_tick)
-    print_to_stm32                           0x080046cd   Thumb Code    88  main.o(i.print_to_stm32)
-    print_vector                             0x08004759   Thumb Code    58  dtoa.o(i.print_vector)
-    sqrtf                                    0x08004799   Thumb Code    62  sqrtf.o(i.sqrtf)
-    time_init                                0x080047d9   Thumb Code    56  main.o(i.time_init)
-    update_timestamp                         0x0800481d   Thumb Code    82  stm32f4xx_it.o(i.update_timestamp)
-    vector2_add_vector2                      0x08004881   Thumb Code    10  dtoa.o(i.vector2_add_vector2)
-    vector2_plus                             0x0800488b   Thumb Code    10  dtoa.o(i.vector2_plus)
-    AHBPrescTable                            0x0800489c   Data          16  system_stm32f4xx.o(.constdata)
-    APBPrescTable                            0x080048ac   Data           8  system_stm32f4xx.o(.constdata)
-    __ctype_table                            0x080048b4   Data         129  ctype_o.o(.constdata)
-    Region$$Table$$Base                      0x0800494c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800496c   Number         0  anon$$obj.o(Region$$Table)
+    calculate_angle                          0x08003ee9   Thumb Code   278  main.o(i.calculate_angle)
+    calculate_chans_distance                 0x08004039   Thumb Code   132  main.o(i.calculate_chans_distance)
+    calculate_order                          0x080040c5   Thumb Code    74  main.o(i.calculate_order)
+    calculate_sound_source                   0x08004119   Thumb Code   288  main.o(i.calculate_sound_source)
+    chans_meth                               0x08004249   Thumb Code     4  dtoa.o(i.chans_meth)
+    fputc                                    0x0800424d   Thumb Code    22  usart.o(i.fputc)
+    free                                     0x08004269   Thumb Code    76  malloc.o(i.free)
+    genfunc                                  0x080042b9   Thumb Code   344  dtoa.o(i.genfunc)
+    get_det_d                                0x08004411   Thumb Code    30  main.o(i.get_det_d)
+    is_str_equal                             0x08004435   Thumb Code    30  main.o(i.is_str_equal)
+    is_within_bound                          0x08004455   Thumb Code    68  main.o(i.is_within_bound)
+    main                                     0x0800449d   Thumb Code   194  main.o(i.main)
+    malloc                                   0x08004589   Thumb Code    92  malloc.o(i.malloc)
+    microphone_init                          0x080045f5   Thumb Code   102  main.o(i.microphone_init)
+    print_tick                               0x08004685   Thumb Code    64  main.o(i.print_tick)
+    print_to_stm32                           0x080046f9   Thumb Code    88  main.o(i.print_to_stm32)
+    print_vector                             0x08004785   Thumb Code    58  dtoa.o(i.print_vector)
+    sqrtf                                    0x080047c5   Thumb Code    62  sqrtf.o(i.sqrtf)
+    time_init                                0x08004805   Thumb Code    56  main.o(i.time_init)
+    update_timestamp                         0x08004849   Thumb Code    82  stm32f4xx_it.o(i.update_timestamp)
+    vector2_add_vector2                      0x080048ad   Thumb Code    10  dtoa.o(i.vector2_add_vector2)
+    vector2_plus                             0x080048b7   Thumb Code    10  dtoa.o(i.vector2_plus)
+    AHBPrescTable                            0x080048c8   Data          16  system_stm32f4xx.o(.constdata)
+    APBPrescTable                            0x080048d8   Data           8  system_stm32f4xx.o(.constdata)
+    __ctype_table                            0x080048e0   Data         129  ctype_o.o(.constdata)
+    Region$$Table$$Base                      0x08004978   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08004998   Number         0  anon$$obj.o(Region$$Table)
     sample_flag                              0x20000000   Data           1  main.o(.data)
     SOUND_SPEED                              0x20000004   Data           4  main.o(.data)
     TIME_TICK_RATE                           0x20000008   Data           4  main.o(.data)
     angle_bound                              0x2000000c   Data           4  main.o(.data)
     angle                                    0x20000010   Data           4  main.o(.data)
-    mic_order_cpy                            0x20000014   Data           4  main.o(.data)
-    x_bound                                  0x20000018   Data           8  main.o(.data)
-    y_bound                                  0x20000020   Data           8  main.o(.data)
-    sound_source_pos                         0x20000028   Data           8  main.o(.data)
-    printf_huart                             0x20000030   Data           4  usart.o(.data)
-    order                                    0x20000034   Data           1  stm32f4xx_it.o(.data)
-    mic_bit                                  0x20000035   Data           4  stm32f4xx_it.o(.data)
-    last_ts                                  0x2000003c   Data           4  stm32f4xx_it.o(.data)
-    mic_order                                0x20000040   Data           4  stm32f4xx_it.o(.data)
-    uwTickFreq                               0x20000044   Data           1  stm32f4xx_hal.o(.data)
-    uwTickPrio                               0x20000048   Data           4  stm32f4xx_hal.o(.data)
-    uwTick                                   0x2000004c   Data           4  stm32f4xx_hal.o(.data)
-    SystemCoreClock                          0x20000050   Data           4  system_stm32f4xx.o(.data)
-    __stdout                                 0x20000054   Data           4  stdout.o(.data)
-    __microlib_freelist                      0x20000058   Data           4  mvars.o(.data)
-    __microlib_freelist_initialised          0x2000005c   Data           4  mvars.o(.data)
-    mp_timestamp                             0x20000064   Data          16  main.o(.bss)
-    mp_ts_cpy                                0x20000074   Data          16  main.o(.bss)
-    delta_distance                           0x20000084   Data          24  main.o(.bss)
-    chans_distance                           0x2000009c   Data          24  main.o(.bss)
-    mc_fix_bias                              0x200000b4   Data          16  main.o(.bss)
-    mp_pos                                   0x200000c4   Data          32  main.o(.bss)
-    htim1                                    0x200000e4   Data          72  tim.o(.bss)
-    htim2                                    0x2000012c   Data          72  tim.o(.bss)
-    htim10                                   0x20000174   Data          72  tim.o(.bss)
-    usart1_buffer                            0x200001bc   Data         128  usart.o(.bss)
-    usart2_buffer                            0x2000023c   Data         128  usart.o(.bss)
-    usart3_buffer                            0x200002bc   Data         128  usart.o(.bss)
-    huart1                                   0x2000033c   Data          68  usart.o(.bss)
-    huart2                                   0x20000380   Data          68  usart.o(.bss)
-    huart3                                   0x200003c4   Data          68  usart.o(.bss)
-    hdma_usart1_rx                           0x20000408   Data          96  usart.o(.bss)
-    hdma_usart2_rx                           0x20000468   Data          96  usart.o(.bss)
-    hdma_usart3_rx                           0x200004c8   Data          96  usart.o(.bss)
-    mic_ts_cur                               0x20000528   Data          16  stm32f4xx_it.o(.bss)
-    mic_ts_lst                               0x20000538   Data          16  stm32f4xx_it.o(.bss)
-    __heap_base                              0x20000548   Data           0  startup_stm32f407xx.o(HEAP)
-    __heap_limit                             0x20000748   Data           0  startup_stm32f407xx.o(HEAP)
-    __initial_sp                             0x20000b48   Data           0  startup_stm32f407xx.o(STACK)
+    value1                                   0x20000014   Data           4  main.o(.data)
+    value2                                   0x20000018   Data           4  main.o(.data)
+    mic_order_cpy                            0x2000001c   Data           4  main.o(.data)
+    x_bound                                  0x20000020   Data           8  main.o(.data)
+    y_bound                                  0x20000028   Data           8  main.o(.data)
+    sound_source_pos                         0x20000030   Data           8  main.o(.data)
+    printf_huart                             0x20000038   Data           4  usart.o(.data)
+    order                                    0x2000003c   Data           1  stm32f4xx_it.o(.data)
+    mic_bit                                  0x2000003d   Data           4  stm32f4xx_it.o(.data)
+    last_ts                                  0x20000044   Data           4  stm32f4xx_it.o(.data)
+    mic_order                                0x20000048   Data           4  stm32f4xx_it.o(.data)
+    uwTickFreq                               0x2000004c   Data           1  stm32f4xx_hal.o(.data)
+    uwTickPrio                               0x20000050   Data           4  stm32f4xx_hal.o(.data)
+    uwTick                                   0x20000054   Data           4  stm32f4xx_hal.o(.data)
+    SystemCoreClock                          0x20000058   Data           4  system_stm32f4xx.o(.data)
+    __stdout                                 0x2000005c   Data           4  stdout.o(.data)
+    __microlib_freelist                      0x20000060   Data           4  mvars.o(.data)
+    __microlib_freelist_initialised          0x20000064   Data           4  mvars.o(.data)
+    mp_timestamp                             0x2000006c   Data          16  main.o(.bss)
+    mp_ts_cpy                                0x2000007c   Data          16  main.o(.bss)
+    delta_distance                           0x2000008c   Data          24  main.o(.bss)
+    chans_distance                           0x200000a4   Data          24  main.o(.bss)
+    mc_fix_bias                              0x200000bc   Data          16  main.o(.bss)
+    mp_pos                                   0x200000cc   Data          32  main.o(.bss)
+    htim1                                    0x200000ec   Data          72  tim.o(.bss)
+    htim2                                    0x20000134   Data          72  tim.o(.bss)
+    htim10                                   0x2000017c   Data          72  tim.o(.bss)
+    usart1_buffer                            0x200001c4   Data         128  usart.o(.bss)
+    usart2_buffer                            0x20000244   Data         128  usart.o(.bss)
+    usart3_buffer                            0x200002c4   Data         128  usart.o(.bss)
+    huart1                                   0x20000344   Data          68  usart.o(.bss)
+    huart2                                   0x20000388   Data          68  usart.o(.bss)
+    huart3                                   0x200003cc   Data          68  usart.o(.bss)
+    hdma_usart1_rx                           0x20000410   Data          96  usart.o(.bss)
+    hdma_usart2_rx                           0x20000470   Data          96  usart.o(.bss)
+    hdma_usart3_rx                           0x200004d0   Data          96  usart.o(.bss)
+    mic_ts_cur                               0x20000530   Data          16  stm32f4xx_it.o(.bss)
+    mic_ts_lst                               0x20000540   Data          16  stm32f4xx_it.o(.bss)
+    __heap_base                              0x20000550   Data           0  startup_stm32f407xx.o(HEAP)
+    __heap_limit                             0x20000750   Data           0  startup_stm32f407xx.o(HEAP)
+    __initial_sp                             0x20000b50   Data           0  startup_stm32f407xx.o(STACK)
 
 
 
@@ -2107,9 +2109,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000049d0, Max: 0x00080000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00004a04, Max: 0x00080000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000496c, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00004998, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2284,65 +2286,65 @@ Memory Map of the image
     0x08003cc4   0x08003cc4   0x0000002e   Code   RO         3539    i._printf_pre_padding  mc_w.l(printfa.o)
     0x08003cf2   0x08003cf2   0x0000000a   Code   RO         3541    i._sputc            mc_w.l(printfa.o)
     0x08003cfc   0x08003cfc   0x000001ec   Code   RO          128    i.arg_prase         main.o
-    0x08003ee8   0x08003ee8   0x00000124   Code   RO          129    i.calculate_angle   main.o
-    0x0800400c   0x0800400c   0x0000008c   Code   RO          130    i.calculate_chans_distance  main.o
-    0x08004098   0x08004098   0x00000054   Code   RO          236    i.calculate_order   main.o
-    0x080040ec   0x080040ec   0x00000130   Code   RO          132    i.calculate_sound_source  main.o
-    0x0800421c   0x0800421c   0x00000004   Code   RO           78    i.chans_meth        dtoa.o
-    0x08004220   0x08004220   0x0000001c   Code   RO          501    i.fputc             usart.o
-    0x0800423c   0x0800423c   0x00000050   Code   RO         3557    i.free              mc_w.l(malloc.o)
-    0x0800428c   0x0800428c   0x00000158   Code   RO           11    i.genfunc           dtoa.o
-    0x080043e4   0x080043e4   0x00000024   Code   RO          231    i.get_det_d         main.o
-    0x08004408   0x08004408   0x0000001e   Code   RO          133    i.is_str_equal      main.o
-    0x08004426   0x08004426   0x00000002   PAD
-    0x08004428   0x08004428   0x00000048   Code   RO          225    i.is_within_bound   main.o
-    0x08004470   0x08004470   0x000000ec   Code   RO          134    i.main              main.o
-    0x0800455c   0x0800455c   0x0000006c   Code   RO         3558    i.malloc            mc_w.l(malloc.o)
-    0x080045c8   0x080045c8   0x00000090   Code   RO          242    i.microphone_init   main.o
-    0x08004658   0x08004658   0x00000074   Code   RO          136    i.print_tick        main.o
-    0x080046cc   0x080046cc   0x0000008c   Code   RO          137    i.print_to_stm32    main.o
-    0x08004758   0x08004758   0x00000040   Code   RO           84    i.print_vector      dtoa.o
-    0x08004798   0x08004798   0x0000003e   Code   RO         3275    i.sqrtf             m_wm.l(sqrtf.o)
-    0x080047d6   0x080047d6   0x00000002   PAD
-    0x080047d8   0x080047d8   0x00000044   Code   RO          248    i.time_init         main.o
-    0x0800481c   0x0800481c   0x00000064   Code   RO          583    i.update_timestamp  stm32f4xx_it.o
-    0x08004880   0x08004880   0x0000000a   Code   RO           73    i.vector2_add_vector2  dtoa.o
-    0x0800488a   0x0800488a   0x0000000a   Code   RO           52    i.vector2_plus      dtoa.o
-    0x08004894   0x08004894   0x00000008   Data   RO         2193    .constdata          stm32f4xx_hal_dma.o
-    0x0800489c   0x0800489c   0x00000010   Data   RO         3210    .constdata          system_stm32f4xx.o
-    0x080048ac   0x080048ac   0x00000008   Data   RO         3211    .constdata          system_stm32f4xx.o
-    0x080048b4   0x080048b4   0x00000081   Data   RO         3665    .constdata          mc_w.l(ctype_o.o)
-    0x08004935   0x08004935   0x00000003   PAD
-    0x08004938   0x08004938   0x00000004   Data   RO         3666    .constdata          mc_w.l(ctype_o.o)
-    0x0800493c   0x0800493c   0x0000000f   Data   RO           12    .conststring        dtoa.o
-    0x0800494b   0x0800494b   0x00000001   PAD
-    0x0800494c   0x0800494c   0x00000020   Data   RO         3709    Region$$Table       anon$$obj.o
+    0x08003ee8   0x08003ee8   0x00000150   Code   RO          129    i.calculate_angle   main.o
+    0x08004038   0x08004038   0x0000008c   Code   RO          130    i.calculate_chans_distance  main.o
+    0x080040c4   0x080040c4   0x00000054   Code   RO          236    i.calculate_order   main.o
+    0x08004118   0x08004118   0x00000130   Code   RO          132    i.calculate_sound_source  main.o
+    0x08004248   0x08004248   0x00000004   Code   RO           78    i.chans_meth        dtoa.o
+    0x0800424c   0x0800424c   0x0000001c   Code   RO          501    i.fputc             usart.o
+    0x08004268   0x08004268   0x00000050   Code   RO         3557    i.free              mc_w.l(malloc.o)
+    0x080042b8   0x080042b8   0x00000158   Code   RO           11    i.genfunc           dtoa.o
+    0x08004410   0x08004410   0x00000024   Code   RO          231    i.get_det_d         main.o
+    0x08004434   0x08004434   0x0000001e   Code   RO          133    i.is_str_equal      main.o
+    0x08004452   0x08004452   0x00000002   PAD
+    0x08004454   0x08004454   0x00000048   Code   RO          225    i.is_within_bound   main.o
+    0x0800449c   0x0800449c   0x000000ec   Code   RO          134    i.main              main.o
+    0x08004588   0x08004588   0x0000006c   Code   RO         3558    i.malloc            mc_w.l(malloc.o)
+    0x080045f4   0x080045f4   0x00000090   Code   RO          242    i.microphone_init   main.o
+    0x08004684   0x08004684   0x00000074   Code   RO          136    i.print_tick        main.o
+    0x080046f8   0x080046f8   0x0000008c   Code   RO          137    i.print_to_stm32    main.o
+    0x08004784   0x08004784   0x00000040   Code   RO           84    i.print_vector      dtoa.o
+    0x080047c4   0x080047c4   0x0000003e   Code   RO         3275    i.sqrtf             m_wm.l(sqrtf.o)
+    0x08004802   0x08004802   0x00000002   PAD
+    0x08004804   0x08004804   0x00000044   Code   RO          248    i.time_init         main.o
+    0x08004848   0x08004848   0x00000064   Code   RO          583    i.update_timestamp  stm32f4xx_it.o
+    0x080048ac   0x080048ac   0x0000000a   Code   RO           73    i.vector2_add_vector2  dtoa.o
+    0x080048b6   0x080048b6   0x0000000a   Code   RO           52    i.vector2_plus      dtoa.o
+    0x080048c0   0x080048c0   0x00000008   Data   RO         2193    .constdata          stm32f4xx_hal_dma.o
+    0x080048c8   0x080048c8   0x00000010   Data   RO         3210    .constdata          system_stm32f4xx.o
+    0x080048d8   0x080048d8   0x00000008   Data   RO         3211    .constdata          system_stm32f4xx.o
+    0x080048e0   0x080048e0   0x00000081   Data   RO         3665    .constdata          mc_w.l(ctype_o.o)
+    0x08004961   0x08004961   0x00000003   PAD
+    0x08004964   0x08004964   0x00000004   Data   RO         3666    .constdata          mc_w.l(ctype_o.o)
+    0x08004968   0x08004968   0x0000000f   Data   RO           12    .conststring        dtoa.o
+    0x08004977   0x08004977   0x00000001   PAD
+    0x08004978   0x08004978   0x00000020   Data   RO         3709    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM2 (Exec base: 0x10000000, Load base: 0x080049d0, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
+    Execution Region RW_IRAM2 (Exec base: 0x10000000, Load base: 0x08004a04, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800496c, Size: 0x00000b48, Max: 0x00020000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08004998, Size: 0x00000b50, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x0800496c   0x00000030   Data   RW          142    .data               main.o
-    0x20000030   0x0800499c   0x00000004   Data   RW          503    .data               usart.o
-    0x20000034   0x080049a0   0x00000010   Data   RW          586    .data               stm32f4xx_it.o
-    0x20000044   0x080049b0   0x0000000c   Data   RW         2620    .data               stm32f4xx_hal.o
-    0x20000050   0x080049bc   0x00000004   Data   RW         3212    .data               system_stm32f4xx.o
-    0x20000054   0x080049c0   0x00000004   Data   RW         3621    .data               mc_w.l(stdout.o)
-    0x20000058   0x080049c4   0x00000004   Data   RW         3628    .data               mc_w.l(mvars.o)
-    0x2000005c   0x080049c8   0x00000004   Data   RW         3629    .data               mc_w.l(mvars.o)
-    0x20000060   0x080049cc   0x00000004   Data   RW         3633    .data               mc_w.l(errno.o)
-    0x20000064        -       0x00000080   Zero   RW          140    .bss                main.o
-    0x200000e4        -       0x000000d8   Zero   RW          446    .bss                tim.o
-    0x200001bc        -       0x0000036c   Zero   RW          502    .bss                usart.o
-    0x20000528        -       0x00000020   Zero   RW          584    .bss                stm32f4xx_it.o
-    0x20000548        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f407xx.o
-    0x20000748        -       0x00000400   Zero   RW            1    STACK               startup_stm32f407xx.o
+    0x20000000   0x08004998   0x00000038   Data   RW          142    .data               main.o
+    0x20000038   0x080049d0   0x00000004   Data   RW          503    .data               usart.o
+    0x2000003c   0x080049d4   0x00000010   Data   RW          586    .data               stm32f4xx_it.o
+    0x2000004c   0x080049e4   0x0000000c   Data   RW         2620    .data               stm32f4xx_hal.o
+    0x20000058   0x080049f0   0x00000004   Data   RW         3212    .data               system_stm32f4xx.o
+    0x2000005c   0x080049f4   0x00000004   Data   RW         3621    .data               mc_w.l(stdout.o)
+    0x20000060   0x080049f8   0x00000004   Data   RW         3628    .data               mc_w.l(mvars.o)
+    0x20000064   0x080049fc   0x00000004   Data   RW         3629    .data               mc_w.l(mvars.o)
+    0x20000068   0x08004a00   0x00000004   Data   RW         3633    .data               mc_w.l(errno.o)
+    0x2000006c        -       0x00000080   Zero   RW          140    .bss                main.o
+    0x200000ec        -       0x000000d8   Zero   RW          446    .bss                tim.o
+    0x200001c4        -       0x0000036c   Zero   RW          502    .bss                usart.o
+    0x20000530        -       0x00000020   Zero   RW          584    .bss                stm32f4xx_it.o
+    0x20000550        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f407xx.o
+    0x20000750        -       0x00000400   Zero   RW            1    STACK               startup_stm32f407xx.o
 
 
 ==============================================================================
@@ -2355,7 +2357,7 @@ Image component sizes
         92          4          0          0          0        870   dma.o
        432          6         15          0          0       6547   dtoa.o
        212         10          0          0          0       1071   gpio.o
-      2306        482          0         48        128     703055   main.o
+      2350        490          0         56        128     703225   main.o
         36          8        392          0       1536        856   startup_stm32f407xx.o
        144         24          0         12          0       8921   stm32f4xx_hal.o
        198         14          0          0          0      34083   stm32f4xx_hal_cortex.o
@@ -2372,7 +2374,7 @@ Image component sizes
       1108        146          0          4        876       5409   usart.o
 
     ----------------------------------------------------------------------
-     11844       1118        472         84       2788     824602   Object Totals
+     11888       1126        472         92       2788     824772   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         20          0          1          0          0          0   (incl. Padding)
 
@@ -2452,15 +2454,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     18188       1358        608        100       2788     815654   Grand Totals
-     18188       1358        608        100       2788     815654   ELF Image Totals
-     18188       1358        608        100          0          0   ROM Totals
+     18232       1366        608        108       2788     815824   Grand Totals
+     18232       1366        608        108       2788     815824   ELF Image Totals
+     18232       1366        608        108          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                18796 (  18.36kB)
-    Total RW  Size (RW Data + ZI Data)              2888 (   2.82kB)
-    Total ROM Size (Code + RO Data + RW Data)      18896 (  18.45kB)
+    Total RO  Size (Code + RO Data)                18840 (  18.40kB)
+    Total RW  Size (RW Data + ZI Data)              2896 (   2.83kB)
+    Total ROM Size (Code + RO Data + RW Data)      18948 (  18.50kB)
 
 ==============================================================================
 
