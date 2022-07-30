@@ -82,7 +82,7 @@ uint8_t sample_flag = 0;
 extern uint8_t mic_bit[4];
 uint8_t mic_order_cpy[4];
 uint8_t area_bound[6][2];
-float angle;
+float angle = 90;
 void push(Queue *q, uint8_t x)
 {
     q->data[q->front++] = x;
@@ -295,7 +295,9 @@ void print_tick()
 void print_to_stm32()
 {
     printf_huart = &huart2;
-    printf("angle %f posx %f posy %f", angle, sound_source_pos.x, sound_source_pos.y);
+    char temp[128];
+    sprintf(temp, "angle %.5f posx %.5f posy %.5f", angle, sound_source_pos.x, sound_source_pos.y);
+    printf("%s", temp);
     printf_huart = &huart3;
 }
 inline float get_det_d(int ts1, int ts2)
