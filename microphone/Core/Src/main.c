@@ -7,7 +7,7 @@
  * @attention
  *
  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * All rights sound_source_poserved.</center></h2>
  *
  * This software component is licensed by ST under BSD 3-Clause license,
  * the "License"; You may not use this file except in compliance with the
@@ -59,17 +59,20 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#define SOUND_SPEED 346.0f
-#define TIME_TICK_RATE 0.5E-3f
 
-#define DISTANCE_LOG
+//#define DISTANCE_LOG
 #define SS_POS_LOG
 #define TIMESTAMP_LOG
 
+float SOUND_SPEED = 346.0f;
+float TIME_TICK_RATE = 0.5E-3f;
 int mp_timestamp[4] = {0};
 int mp_ts_cpy[4] = {0};
 float delta_distance[3][2] = {0};
 float chans_distance[3][2] = {0};
+float x_bound[2];
+float y_bound[2];
+int mc_fix_bias[4] = {0};
 vector2 mp_pos[4];
 vector2 sound_source_pos;
 
@@ -77,7 +80,7 @@ uint8_t sample_flag = 0;
 extern uint8_t mic_bit[4];
 
 uint8_t mic_order_cpy[4];
-
+uint8_t area_bound[6][2];
 void push(Queue *q, uint8_t x)
 {
     q->data[q->front++] = x;
@@ -111,7 +114,7 @@ int main(void)
 
     /* MCU Configuration--------------------------------------------------------*/
 
-    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+    /* sound_source_poset of all peripherals, Initializes the Flash interface and the Systick. */
     HAL_Init();
 
     /* USER CODE BEGIN Init */
@@ -138,6 +141,7 @@ int main(void)
     time_init();
     microphone_init();
     printf("Init\n");
+
     vector2 sound_source;
     /* USER CODE END 2 */
 
@@ -145,23 +149,35 @@ int main(void)
     /* USER CODE BEGIN WHILE */
     while (1)
     {
+#ifdef WANGCHAORUI
         if ((!mic_bit[0] && !mic_bit[1] && !mic_bit[2] && !mic_bit[3]))
         {
             if (sample_flag)
             {
+                uint8_t data_is_value = 1;
                 for (int i = 0; i < 4; i++)
+                {
+                    mp_timestamp[i] += mc_fix_bias[i];
+                    if (mp_ts_cpy == mp_timestamp)
+                        data_is_value = 0;
                     mp_ts_cpy[i] = mp_timestamp[i];
-
+                }
                 calculate_order();
+                if (mic_order_cpy[0] == 0 || mic_order_cpy[0] == 2)
+                    data_is_value = 0;
+                if (data_is_value)
+                {
 #ifdef TIMESTAMP_LOG
-                print_tick();
-                printf("begin calculate\n");
+                    print_tick();
+                    printf("begin calculate\n");
 #endif
-                calculate_chans_distance();
-                sound_source = calculate_sound_source();
-                sample_flag = 0;
+                    calculate_chans_distance();
+                    sound_source = calculate_sound_source();
+                    sample_flag = 0;
+                }
             }
         }
+#endif
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -226,14 +242,18 @@ inline void time_init()
 }
 inline void microphone_init()
 {
-    mp_pos[0].x = -250;
-    mp_pos[0].y = 0;
-    mp_pos[1].x = 250;
+    mp_pos[1].x = -500;
     mp_pos[1].y = 0;
-    mp_pos[2].x = -250;
-    mp_pos[2].y = -155;
-    mp_pos[3].x = 250;
-    mp_pos[3].y = -155;
+    mp_pos[3].x = 500;
+    mp_pos[3].y = 0;
+    mp_pos[0].x = -500;
+    mp_pos[0].y = -500;
+    mp_pos[2].x = 500;
+    mp_pos[2].y = -500;
+    x_bound[0] = -1500;
+    x_bound[1] = 1500;
+    y_bound[0] = -5000;
+    y_bound[1] = 5000;
 }
 inline void calculate_order()
 {
@@ -267,10 +287,12 @@ void print_tick()
 
 inline float get_det_d(int ts1, int ts2)
 {
-    ts1 = ts1 < ts2 ? ts1 : ts1 - 65535;
     return ((int)(ts1 - ts2) * TIME_TICK_RATE * SOUND_SPEED);
 }
-
+inline float get_det_t(int ts1, int ts2)
+{
+    return ((int)(ts1 - ts2) * TIME_TICK_RATE);
+}
 void calculate_delta_distance()
 {
     delta_distance[0][0] = get_det_d(mp_timestamp[0], mp_timestamp[1]);
@@ -303,33 +325,91 @@ void calculate_chans_distance()
 #endif
 }
 
+inline uint8_t is_within_bound(vector2 v)
+{
+    if (v.x < x_bound[1] && v.x > x_bound[0] && v.y < y_bound[1] && v.y > y_bound[0])
+        return 1;
+
+    return 0;
+}
+
 #define CHANS_METHOD
 vector2 calculate_sound_source()
 {
-    vector2 res = {0};
 #ifdef CHANS_METHOD
     vector2 sp[3];
     sp[0] = chans_meth(mp_pos[mic_order_cpy[0]], mp_pos[mic_order_cpy[1]], mp_pos[mic_order_cpy[2]], chans_distance[0][0], chans_distance[0][1]);
     sp[1] = chans_meth(mp_pos[mic_order_cpy[0]], mp_pos[mic_order_cpy[1]], mp_pos[mic_order_cpy[3]], chans_distance[1][0], chans_distance[1][1]);
     sp[2] = chans_meth(mp_pos[mic_order_cpy[0]], mp_pos[mic_order_cpy[2]], mp_pos[mic_order_cpy[3]], chans_distance[2][0], chans_distance[2][1]);
+
+    int aa = 0;
+    vector2 sum = {0};
     for (int i = 0; i < 3; i++)
     {
-        res = vector2_add_vector2(res, sp[i]);
-        print_vector(sp[i]);
+        if (is_within_bound(sp[i]))
+        {
+            aa++;
+            sum = vector2_add_vector2(sum, sp[i]);
+        }
     }
-    res = vector2_plus(res, (1.0f / 3.0f));
+    if (aa)
+        sound_source_pos = vector2_plus(sum, (1.0f / aa));
 #ifdef SS_POS_LOG
     printf("ss pos:");
-    print_vector(res);
+    print_vector(sound_source_pos);
 #endif
 
 #endif
 
-    return res;
+    return sound_source_pos;
+}
+int is_str_equal(char *str_p1, uint8_t size1, char *str_p2)
+{
+    if (size1 == 0)
+        return 0;
+    for (int i = 0; i < size1; i++)
+    {
+        if (str_p1[i] != str_p2[i])
+            return 0;
+    }
+    return 1;
 }
 
 void arg_prase(int argc, char **argv)
 {
+    for (int i = 0; i < argc; i++)
+    {
+        if (is_str_equal("tickrate", 8, argv[i]))
+        {
+            TIME_TICK_RATE = atof(argv[++i]);
+            printf("set TIME_TICK_RATE :%.9f", TIME_TICK_RATE);
+        }
+        else if (is_str_equal("soundspeed", 10, argv[i]))
+        {
+            SOUND_SPEED = atof(argv[++i]);
+            printf("set SOUND_SPEED :%5f", SOUND_SPEED);
+        }
+        else if (is_str_equal("add0bias", 8, argv[i]))
+        {
+            mc_fix_bias[0] = atoi(argv[++i]);
+            printf("set 0bias:%d\n", mc_fix_bias[0]);
+        }
+        else if (is_str_equal("add1bias", 8, argv[i]))
+        {
+            mc_fix_bias[1] = atoi(argv[++i]);
+            printf("set 0bias:%d\n", mc_fix_bias[1]);
+        }
+        else if (is_str_equal("add2bias", 8, argv[i]))
+        {
+            mc_fix_bias[2] = atoi(argv[++i]);
+            printf("set 0bias:%d\n", mc_fix_bias[2]);
+        }
+        else if (is_str_equal("add3bias", 8, argv[i]))
+        {
+            mc_fix_bias[3] = atoi(argv[++i]);
+            printf("set 0bias:%d\n", mc_fix_bias[3]);
+        }
+    }
 }
 /* USER CODE END 4 */
 

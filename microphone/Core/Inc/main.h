@@ -44,6 +44,7 @@ extern "C"
 #define QUEUE_SIZE 1000
 #define WINDOW_SIZE 500
 
+#define WANGCHAORUI
     typedef struct _queue
     {
         uint8_t data[QUEUE_SIZE];
@@ -64,6 +65,9 @@ extern "C"
     extern float chans_distance[3][2];
     extern vector2 mp_pos[4];
     extern vector2 sound_source_pos;
+    extern int mp_ts_cpy[4];
+
+    extern uint8_t mic_order_cpy[4];
 
     void arg_prase(int argc, char **argv);
     void microphone_init();
@@ -73,7 +77,9 @@ extern "C"
     vector2 calculate_sound_source();
     float get_det_d(int ts1, int ts2);
     void print_tick();
+    void time_beg(uint8_t index);
     void calculate_order();
+    uint8_t is_within_bound(vector2 v);
     /* USER CODE END EM */
 
     /* Exported functions prototypes ---------------------------------------------*/

@@ -65,12 +65,15 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 /* USER CODE BEGIN EV */
+#ifdef WANGCHAORUI
 // uint8_t mic_bit[4];
 // Queue mic_que[4];
 // uint8_t mic_cur[4];
 // uint8_t mic_lst[4];
 // int mic_tick[4];
-#define TSTH 6000
+#define TSTH 20000
+
+extern TIM_HandleTypeDef htim2;
 
 uint8_t mic_bit[4] = {1};
 int mic_ts_cur[4];
@@ -79,6 +82,20 @@ int mic_ts[4];
 int last_ts;
 unsigned int log_tick = 0;
 
+#endif
+#ifdef CHEN_SHIQIAO
+uint8_t is_timing[4] = {0};
+int tick = 0;
+inline void time_beg(uint8_t index)
+{
+    if (is_timing[index] == 0)
+    {
+        is_timing[index] = 1;
+        __HAL_TIM_SetCounter(&htim1, 0);
+        mp_timestamp[index] = __HAL_TIM_GET_COUNTER(&htim2);
+    }
+}
+#endif
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -224,12 +241,15 @@ void SysTick_Handler(void)
  */
 void EXTI0_IRQHandler(void)
 {
-    /* USER CODE BEGIN EXTI0_IRQn 0 */
-
+/* USER CODE BEGIN EXTI0_IRQn 0 */
+#ifdef CHEN_SHIQIAO
+    time_beg(0);
+#endif
+    update_timestamp(0);
     /* USER CODE END EXTI0_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
     /* USER CODE BEGIN EXTI0_IRQn 1 */
-    update_timestamp(0);
+    // update_timestamp(0);
     /* USER CODE END EXTI0_IRQn 1 */
 }
 
@@ -240,10 +260,14 @@ void EXTI1_IRQHandler(void)
 {
     /* USER CODE BEGIN EXTI1_IRQn 0 */
 
+#ifdef CHEN_SHIQIAO
+    time_beg(1);
+#endif
+    update_timestamp(1);
     /* USER CODE END EXTI1_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
     /* USER CODE BEGIN EXTI1_IRQn 1 */
-    update_timestamp(1);
+    // update_timestamp(1);
     /* USER CODE END EXTI1_IRQn 1 */
 }
 
@@ -254,10 +278,13 @@ void EXTI2_IRQHandler(void)
 {
     /* USER CODE BEGIN EXTI2_IRQn 0 */
 
-    /* USER CODE END EXTI2_IRQn 0 */
+#ifdef CHEN_SHIQIAO
+    time_beg(2);
+#endif
+    update_timestamp(2);
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
     /* USER CODE BEGIN EXTI2_IRQn 1 */
-    update_timestamp(2);
+    // update_timestamp(2);
     /* USER CODE END EXTI2_IRQn 1 */
 }
 
@@ -268,10 +295,14 @@ void EXTI3_IRQHandler(void)
 {
     /* USER CODE BEGIN EXTI3_IRQn 0 */
 
+#ifdef CHEN_SHIQIAO
+    time_beg(3);
+#endif
+    update_timestamp(3);
     /* USER CODE END EXTI3_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
     /* USER CODE BEGIN EXTI3_IRQn 1 */
-    update_timestamp(3);
+    // update_timestamp(3);
     /* USER CODE END EXTI3_IRQn 1 */
 }
 
@@ -425,7 +456,7 @@ void update_timestamp(int i)
 }
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-
+#ifdef WANGCHAORUI
     if (htim->Instance == TIM1)
     {
         int timestamp = TIM2->CNT;
@@ -441,7 +472,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         // mic_bit[2] = HAL_GPIO_ReadPin(MIC_IN2_GPIO_Port, MIC_IN2_Pin);
         // mic_bit[3] = HAL_GPIO_ReadPin(MIC_IN3_GPIO_Port, MIC_IN3_Pin);
         // for (uint8_t i = 0; i < 4; i++)
-        //     push(&mic_que[i], mic_bit[i]);
+        // push(&mic_que[i], mic_bit[i]);
 
         // memcpy(mic_lst, mic_cur, sizeof(mic_cur));
 
@@ -449,36 +480,49 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
         // update_timestamp();
     }
-    // if (TIM1 == htim->Instance && is_timing)
-    //{
-    //     printf("\n");
-    //     is_timing = 0;
-    //     HAL_NVIC_EnableIRQ(EXTI0_IRQn);
-    //     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
-    //     HAL_NVIC_EnableIRQ(EXTI2_IRQn);
-    //     HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-    //     for (int i = 0; i < 4; i++)
-    //     {
-    //         if (mp_timestamp[i] == -1)
-    //             return;
-    //     }
-    //     calculate_delta_distance();
-    //     // print_delta_distance(0, 1, 2, 3, delta_distance[0][0], delta_distance[0][1]);
-    //     // print_delta_distance(0, 2, 1, 3, delta_distance[1][0], delta_distance[1][1]);
-    //     // print_delta_distance(0, 3, 1, 2, delta_distance[2][0], delta_distance[2][1]);
-    //     for (int i = 0; i < 4; i++)
-    //     {
-    //         printf("mp:%d,timestamp:%u\n", i, mp_timestamp[i]);
-    //         mp_timestamp[i] = -1;
-    //     }
-    // }
-    // else if (TIM10 == htim->Instance && is_timing)
-    //{
-    //     for (int i = 0; i < 4; i++)
-    //     {
-    //         mp_timestamp[i] = -1;
-    //     }
-    // }
+#endif
+#ifdef CHEN_SHIQIAO
+    if (TIM1 == htim->Instance)
+    {
+        if (is_timing[0] * is_timing[1] * is_timing[2] * is_timing[3] == 0)
+            return;
+        tick++;
+        uint32_t mean = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            mp_ts_cpy[i] = mp_timestamp[i];
+            mean += mp_ts_cpy[i];
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            is_timing[i] = 0;
+        }
+        mean /= 4;
+        for (int i = 0; i < 4; i++)
+        {
+            if (abs(mp_ts_cpy[i] - mean) > 1000000)
+                return;
+        }
+        calculate_order();
+        if (mic_order_cpy[0] == 0 || mic_order_cpy[0] == 2)
+            return;
+        print_tick();
+        calculate_chans_distance();
+        sound_source_pos = calculate_sound_source();
+
+        // calculate_delta_distance();
+        //  print_delta_distance(0, 1, 2, 3, delta_distance[0][0], delta_distance[0][1]);
+        //  print_delta_distance(0, 2, 1, 3, delta_distance[1][0], delta_distance[1][1]);
+        //  print_delta_distance(0, 3, 1, 2, delta_distance[2][0], delta_distance[2][1]);
+    }
+    else if (TIM10 == htim->Instance && is_timing)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            mp_timestamp[i] = -1;
+        }
+    }
+#endif
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
