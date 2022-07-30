@@ -61,7 +61,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 //#define DISTANCE_LOG
-//#define SS_POS_LOG
+#define SS_POS_LOG
 #define TIMESTAMP_LOG
 #define ANGLE_LOG
 
@@ -77,7 +77,7 @@ float y_bound[2];
 int mc_fix_bias[4] = {0};
 vector2 mp_pos[4];
 vector2 sound_source_pos;
-
+float angle_bound = 500;
 uint8_t sample_flag = 0;
 extern uint8_t mic_bit[4];
 uint8_t mic_order_cpy[4];
@@ -323,16 +323,13 @@ void calculate_angle()
 {
     float dt1 = (get_det_d(mp_ts_cpy[2], mp_ts_cpy[0]));
     float dt2 = (get_det_d(mp_ts_cpy[3], mp_ts_cpy[1]));
-    if (abs(dt1) > 5000 && abs(dt2) > 5000)
+    if (abs(dt1) > angle_bound && abs(dt2) > angle_bound)
     {
         return;
     }
-    float value1 = (180.f / 3.141592f) * acosf(dt1 / 5000);
-    float value2 = (180.f / 3.141592f) * acosf(dt2 / 5000);
-    if ((value1 - value2) < 10)
-    {
-        angle = (value1 + value2) / 2;
-    }
+    float value1 = (180.f / 3.141592f) * acosf(dt1 / angle_bound);
+    float value2 = (180.f / 3.141592f) * acosf(dt2 / angle_bound);
+    angle = (value1 + value2) / 2;
 #ifdef ANGLE_LOG
     printf("dt %f %f\n value %f %f\n, angle :%f\n", dt1, dt2, value1, value2, angle);
 #endif
@@ -440,6 +437,11 @@ void arg_prase(int argc, char **argv)
         {
             mc_fix_bias[3] = atoi(argv[++i]);
             printf("set 0bias:%d\n", mc_fix_bias[3]);
+        }
+        else if (is_str_equal("angleb", 6, argv[i]))
+        {
+            angle_bound = atof(argv[++i]);
+            printf("Set angle bound:%f\n", angle_bound);
         }
     }
 }
