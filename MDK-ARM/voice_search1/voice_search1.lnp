@@ -24,7 +24,7 @@
 "voice_search1\stm32f1xx_hal_uart.o"
 "voice_search1\stm32f1xx_hal_usart.o"
 "voice_search1\system_stm32f1xx.o"
---library_type=microlib --strict --scatter "voice_search1\voice_search1.sct"
+--strict --scatter "voice_search1\voice_search1.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "voice_search1.map" -o voice_search1\voice_search1.axf

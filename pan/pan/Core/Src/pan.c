@@ -3,21 +3,27 @@
 #include "main.h"
 #include "pan.h"
 #include "tim.h"
+#include <math.h>
 void send_L_angle(int angle)
 {
-    int counter_trans = 500 + error_fix + (angle * 2000) / 180;
+    int counter_trans = 200 + error_fix + (angle * 1000) / 180;
+	printf("counter_trans_l::%d\r\n",counter_trans);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, counter_trans);
+	
+	/*
     printf("counter_trans:%d\r\n", counter_trans);
     printf("error_fix:%d\r\n", error_fix);
-    printf("angle*2000/180:%f\r\n", angle * 2000.0 / 180);
+    printf("angle*2000/180:%f\r\n", angle * 2000.0 / 180);*/
 }
 
 void send_H_angle(int angle)
 {
-    int counter_trans = 500 + error_fix + ((100 - angle) * 2000) / 180;
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, counter_trans);
+    int counter_trans = -50 + error_fix + (angle * 2000) / 180;
+	printf("counter_trans_h:%d\r\n",counter_trans);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, angle);
+	/*
     printf("counter_trans:%d\r\n", counter_trans);
-    printf("error_fix:%d\r\n", error_fix);
+    printf("error_fix:%d\r\n", error_fix);*/
 }
 
 float trans_anglea(int x, int y)

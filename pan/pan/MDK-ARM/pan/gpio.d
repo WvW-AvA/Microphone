@@ -8,7 +8,7 @@ pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 pan\gpio.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 pan\gpio.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
 pan\gpio.o: ../Drivers/CMSIS/Include/core_cm4.h
-pan\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+pan\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 pan\gpio.o: ../Drivers/CMSIS/Include/cmsis_version.h
 pan\gpio.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 pan\gpio.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -16,7 +16,7 @@ pan\gpio.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 pan\gpio.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-pan\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stddef.h
+pan\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
@@ -32,6 +32,6 @@ pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 pan\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-pan\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdio.h
-pan\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
-pan\gpio.o: C:\MyDate\Keil\ARM\ARMCC\Bin\..\include\string.h
+pan\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+pan\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+pan\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

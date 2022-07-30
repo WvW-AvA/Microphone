@@ -59,7 +59,8 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-extern uint8_t usart1_RxBuffer[4];
+extern uint8_t usart1_RxBuffer[20];
+extern int usart1_RxBufferLen;
 extern int receive_x;
 extern int receive_y;
 
@@ -104,7 +105,7 @@ int main(void)
   MX_USART2_Init();
   /* USER CODE BEGIN 2 */
 	//__HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
-  HAL_UART_Receive_IT(&huart1,usart1_RxBuffer,4);
+  //HAL_UART_Receive_IT(&huart1,&tmp,1);
 	//HAL_UART_Receive_IT(&huart1,,1);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
@@ -114,20 +115,23 @@ int main(void)
 	int x=130,y=270;
 	printf("anglea:%f\r\n",trans_anglea(x,y));
 	printf("angleb:%f\r\n",trans_angleb(x,y));
+	
+			//HAL_UART_Receive_IT(&huart1, &tmp, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//		send_H_angle((int)trans_angleb(receive_x,receive_y));
-//		send_L_angle((int)trans_anglea(receive_x,receive_y)+90);
+		send_H_angle((int)trans_angleb(receive_x,receive_y));
+		send_L_angle((int)trans_anglea(receive_x,receive_y)+90);
+		printf("%d: %s\r\n", usart1_RxBufferLen, usart1_RxBuffer);
   printf("receive_x:%d\r\n",receive_x);
   printf("receive_y:%d\r\n",receive_y);
 		//a++;
 		//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500+error_fix);
 		//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 1500+error_fix);
-  HAL_Delay(3000);
+  HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

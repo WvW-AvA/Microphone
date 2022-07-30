@@ -27,6 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "pan.h"
 /* USER CODE END Includes */
 
@@ -59,101 +60,144 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 float pos_x;
 float pos_y;
+float anglea;
+float angleb;
+
+#ifdef __GNUC__
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
+PUTCHAR_PROTOTYPE
+{
+    HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
+    return ch;
+}
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
-    /* USER CODE BEGIN 1 */
+  /* USER CODE BEGIN 1 */
 
-    /* USER CODE END 1 */
+  /* USER CODE END 1 */
 
-    /* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
-    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-    HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
-    /* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */
 
-    /* USER CODE END Init */
+  /* USER CODE END Init */
 
-    /* Configure the system clock */
-    SystemClock_Config();
+  /* Configure the system clock */
+  SystemClock_Config();
 
-    /* USER CODE BEGIN SysInit */
+  /* USER CODE BEGIN SysInit */
     // MXInit
     {
-        /* USER CODE END SysInit */
+  /* USER CODE END SysInit */
 
-        /* Initialize all configured peripherals */
-        MX_GPIO_Init();
-        MX_DMA_Init();
-        MX_TIM1_Init();
-        MX_USART1_UART_Init();
-        MX_USART2_UART_Init();
-        MX_USART3_UART_Init();
-        /* USER CODE BEGIN 2 */
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_TIM1_Init();
+  MX_USART1_UART_Init();
+  MX_USART2_UART_Init();
+  MX_USART3_UART_Init();
+  /* USER CODE BEGIN 2 */
     }
+		
     //  I2C_GPIO_Config();
     //  MPU6050_init();
     // TimeInit();
-    printf("Init\n");
-    /* USER CODE END 2 */
+    printf("Init\r\n");
+		//HAL_UART_Transmit(&huart3, "hello\r\n", 7, 0xff);
+		HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+	  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
+		
+		
+		send_H_angle(500);
+		send_L_angle(90);
+		HAL_Delay(3000);
+												send_H_angle(480);
+										send_L_angle(65);
+		//send_H_angle((int)0);
+		int a=0;
+		pos_x=90;
+		//send_L_angle((int)(0+90));
+  /* USER CODE END 2 */
 
-    /* Infinite loop */
-    /* USER CODE BEGIN WHILE */
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
     while (1)
     {
-        /* USER CODE END WHILE */
+						//printf("enter\r\n");
+		//send_L_angle((int)pos_x);
+			//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, a);
+		//send_H_angle((int)pos_y);
+			//printf("pos_y:%f\r\n",pos_y);
+											printf("t4.txt=\"area 1\"\xff\xff\xff");
+			//printf("pos_y:%d\r\n",(int)pos_y);
+//		HAL_Delay(300);
+//		send_L_angle(0);
+//					send_H_angle(0);
+			//a+=30;
+//			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, a);
+			HAL_Delay(300);
+			//printf("a:%d\r\n",a);
+    /* USER CODE END WHILE */
 
-        /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
     }
-    /* USER CODE END 3 */
+  /* USER CODE END 3 */
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
-    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-    /** Configure the main internal regulator output voltage
-     */
-    __HAL_RCC_PWR_CLK_ENABLE();
-    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-    /** Initializes the RCC Oscillators according to the specified parameters
-     * in the RCC_OscInitTypeDef structure.
-     */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-    RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    RCC_OscInitStruct.PLL.PLLM = 8;
-    RCC_OscInitStruct.PLL.PLLN = 168;
-    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-    RCC_OscInitStruct.PLL.PLLQ = 4;
-    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    /** Initializes the CPU, AHB and APB buses clocks
-     */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+  /** Configure the main internal regulator output voltage
+  */
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 168;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
-    {
-        Error_Handler();
-    }
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /* USER CODE BEGIN 4 */
@@ -180,55 +224,95 @@ void arg_prase(int argc, char **argv)
         printf("%s ", argv[i]);
         if (is_str_equal("posx", 4, argv[i]))
         {
-            float value = atof(argv[++i]);
-            if (value > 0 && value < 300)
+            int value = atoi(argv[++i]);
+            if (value >= 0 && value <= 999)
             {
                 pos_x = value;
+							if(pos_x=='1')
+							{
+										send_H_angle(450);
+										send_L_angle(65);
+								printf("t4.txt=\"area 1\"");
+										
+							}
+							else if(pos_x=='2')
+							{
+										send_H_angle(450);
+										send_L_angle(75);
+							}
+							else if(pos_x=='3')
+							{
+										send_H_angle(450);
+										send_L_angle(85);
+							}
+							else if(pos_x=='4')
+							{
+										send_H_angle(450);
+										send_L_angle(95);
+							}
+							else if(pos_x=='5')
+							{
+										send_H_angle(450);
+										send_L_angle(105);
+							}
+							else if(pos_x=='6')
+							{
+										send_H_angle(450);
+										send_L_angle(115);
+							}
+							
+							
             }
         }
         else if (is_str_equal("posy", 4, argv[i]))
         {
             float value = atof(argv[++i]);
-            if (value > 0 && value < 300)
+            if (value >= 0 && value <= 999)
             {
                 pos_y = value;
             }
         }
     }
-    printf("pos_x:%f,pos_y:%f\n", pos_x, pos_y);
+    printf("\r\npos_x: %f, pos_y: %f\r\n", pos_x, pos_y);
+		anglea = trans_anglea(pos_x, pos_y);
+		angleb = trans_angleb(pos_x, pos_y);
+		printf("angle_a: %f, angle_b: %f\r\n", anglea, angleb);
+		
+//		send_H_angle((int)angleb);
+//		send_L_angle((int)(anglea+90));
 }
 
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
-    /* USER CODE BEGIN Error_Handler_Debug */
+  /* USER CODE BEGIN Error_Handler_Debug */
     /* User can add his own implementation to report the HAL error return state */
     __disable_irq();
     while (1)
     {
     }
-    /* USER CODE END Error_Handler_Debug */
+  /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-    /* USER CODE BEGIN 6 */
+  /* USER CODE BEGIN 6 */
     /* User can add his own implementation to report the file name and line number,
        ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-    /* USER CODE END 6 */
+  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 

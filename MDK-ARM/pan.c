@@ -22,19 +22,9 @@ float trans_anglea(int x,int y)
 {
 	float dx = x - 150.0;
 	float anglea = atan(dx / y) / PI * 180;
-	printf("dx/y: %f\r\n", dx / y);
+	//printf("dx/y: %f\r\n", dx / y);
 	printf("angleA: %f\r\n", anglea);
 	return anglea;
-	/*
-	if(x<150)
-	{
-		printf("atan:%f\r\n",atan((150.0-x)/y));
-	  return 2*3.14159*atan((150-x)/y);
-	}
-	else	if(x>150)
-	{
-	return -atan((x-150)/y);
-	}*/
 }
 
 float trans_angleb(int x,int y)

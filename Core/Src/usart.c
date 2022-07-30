@@ -24,10 +24,10 @@
 #include "main.h"
 #define STR_MAX_SIZE 32
 extern uint8_t tmp;
-uint8_t usart1_RxBuffer[4];
-uint8_t usart1_RxBufferLen = 0;
-uint8_t usart1_RxBufferIndex = 0;
-char usart1_TransBuffer[4];
+uint8_t usart1_RxBuffer[20] = {0};
+int usart1_RxBufferLen = 0;
+int usart1_RxBufferIndex = 0;
+char usart1_TransBuffer[20];
 uint8_t usart1_UART_RxBuffer[256];
 uint8_t usart1_UART_Rx_Cnt = 0;
 uint8_t receive_angle=0;
@@ -182,6 +182,9 @@ void HAL_USART_MspInit(USART_HandleTypeDef* usartHandle)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    /* USART2 interrupt Init */
+    HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspInit 1 */
 
   /* USER CODE END USART2_MspInit 1 */
@@ -234,6 +237,8 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef* usartHandle)
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4);
 
+    /* USART2 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspDeInit 1 */
 
   /* USER CODE END USART2_MspDeInit 1 */
@@ -244,25 +249,26 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef* usartHandle)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
   if (huart -> Instance == huart1.Instance) {
-      static int state; // 0 (^)-> 1 ($)-> 0
+      static int state = 0; // 0 (^)-> 1 ($)-> 0
       int will_switch = (state == 0 && tmp == '^') || (state == 1 && tmp == '$');
       if (will_switch) {
           if (state == 1) {
               usart1_RxBuffer[usart1_RxBufferIndex] = '\0';
               uint8_t axis = usart1_RxBuffer[0];
-              uint8_t *p = &usart1_RxBuffer[1];
-              int num = atoi(p);
+              char *p = (char *)&usart1_RxBuffer[1];
+              int num; sscanf(p, "%d", &num);
               if (axis == 'x') receive_x = num;
               else if (axis == 'y') receive_y = num;
           }
 
           state = !state;
           usart1_RxBufferIndex = 0;
-          return;
+					return;
       }
 
       if (state)
           usart1_RxBuffer[usart1_RxBufferIndex++] = tmp;
+			
   }
 }
 //		if(usart1_UART_RxBuffer[0] == 'a'){//&& (usart1_UART_RxBuffer[usart1_UART_Rx_Cnt -1] == 'b') )
