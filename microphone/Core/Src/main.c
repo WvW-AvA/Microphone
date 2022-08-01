@@ -332,7 +332,7 @@ void calculate_angle()
     }
     if (abs(dt2) < angle_bound)
     {
-        float temp = (180.f / 3.141592f) * acosf(dt1 / angle_bound);
+        float temp = (180.f / 3.141592f) * acosf(dt2 / angle_bound);
         if (temp > 50 && temp < 140)
             value2 = temp;
     }
